@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <imgui/imgui_impl_opengl3.h>
+#include <imgui/imgui_impl_glfw.h>
 
 #include <cstdio>
 #include <fstream>
@@ -10,34 +12,41 @@
 #include <sstream>
 
 #include "Renderer.h"
+#include "Window/Window.h"
 
 int main(int argc, char* argv[])
 {
-	GLFWwindow* window;
+	Window window;
+	Renderer renderer;
 
-	if (!glfwInit())
+	if (!window.Init())
 		return -1;
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	ImGui::CreateContext();
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window.GetWindow(), true);
+	ImGui_ImplOpenGL3_Init("#version 460");
 
-	window = glfwCreateWindow(640, 480, "OpenGL Renderer", NULL, NULL);
-	if (!window)
+
+	while (!glfwWindowShouldClose(window.GetWindow()))
 	{
-		glfwTerminate();
-		return -1;
+		renderer.Clear();
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		glfwSwapBuffers(window.GetWindow());
+		glfwPollEvents();
 	}
 
-	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	glViewport(0, 0, 640, 480);
-
-	
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+	glfwTerminate();
+	return 0;
 }

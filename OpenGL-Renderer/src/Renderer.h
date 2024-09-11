@@ -1,11 +1,10 @@
 #pragma once
+#include "VertexArray/VertexArray.h"
+#include "Shader/Shader.h"
 
-#include <glad/glad.h>
-
-#define ASSERT(x) if (!(x)) __debugbreak();
-#define GLCall(x) GLClearError();\
-	x;\
-	ASSERT(GLLogCall(#x, __FILE__, __LINE__))
-
-void GLClearError();
-bool GLLogCall(const char* function, const char* file, int line);
+class Renderer
+{
+public:
+	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+	void Clear() const;
+};

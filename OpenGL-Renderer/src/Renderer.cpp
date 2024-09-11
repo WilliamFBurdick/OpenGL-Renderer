@@ -1,17 +1,14 @@
 #include "Renderer.h"
-#include <cstdio>
 
-void GLClearError()
+void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
-	while (glGetError() != GL_NO_ERROR);
+	shader.use();
+	va.Bind();
+	ib.Bind();
+	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
-bool GLLogCall(const char* function, const char* file, int line)
+void Renderer::Clear() const
 {
-	while (GLenum error = glGetError())
-	{
-		printf("[OpenGL Error] (%u): %s %s : %i\n", error, function, file, line);
-		return false;
-	}
-	return true;
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
