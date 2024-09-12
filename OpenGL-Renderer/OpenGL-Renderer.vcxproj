@@ -155,6 +155,7 @@
     <ClCompile Include="..\includes\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\includes\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\Tests\Test.cpp" />
     <ClCompile Include="src\VertexArray\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader\Shader.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="src\VertexArray\VertexArray.cpp" />
     <ClCompile Include="src\Texture\Texture.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
+    <ClCompile Include="src\Tests\TestBlending.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\imgui\imconfig.h" />
@@ -175,6 +177,7 @@
     <ClInclude Include="..\includes\imgui\imstb_textedit.h" />
     <ClInclude Include="..\includes\imgui\imstb_truetype.h" />
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\Tests\Test.h" />
     <ClInclude Include="src\VertexArray\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader\Shader.h" />
@@ -183,6 +186,7 @@
     <ClInclude Include="src\VertexArray\VertexBufferLayout.h" />
     <ClInclude Include="src\Texture\Texture.h" />
     <ClInclude Include="src\Window\Window.h" />
+    <ClInclude Include="src\Tests\TestBlending.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
