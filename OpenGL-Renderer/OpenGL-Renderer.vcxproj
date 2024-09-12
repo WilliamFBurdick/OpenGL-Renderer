@@ -190,6 +190,14 @@
     <ClInclude Include="src\Tests\TestBlending.h" />
     <ClInclude Include="src\Tests\TestPostProcessing.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\color.frag" />
+    <None Include="res\shaders\color.vert" />
+    <None Include="res\shaders\phong.frag" />
+    <None Include="res\shaders\phong.vert" />
+    <None Include="res\shaders\unlit.frag" />
+    <None Include="res\shaders\unlit.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
