@@ -1,23 +1,6 @@
-﻿  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_glfw.cpp
-  imgui_impl_opengl3.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  Test.cpp
-  IndexBuffer.cpp
-  Renderer.cpp
-  Shader.cpp
-  main.cpp
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(43,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  VertexBuffer.cpp
-  VertexArray.cpp
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\VertexArray\VertexArray.cpp(33,97): warning C4312: 'type cast': conversion from 'unsigned int' to 'void *' of greater size
-  Texture.cpp
-  Window.cpp
-  TestBlending.cpp
-  Generating Code...
-  glad.c
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+﻿  main.cpp
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(51,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(92,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(93,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(113,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\Source\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

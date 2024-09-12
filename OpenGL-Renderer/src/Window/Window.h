@@ -12,6 +12,8 @@ public:
 	inline void SetWidth(int width) { mWidth = width; }
 	inline void SetHeight(int height) { mHeight = height; }
 
+	void SetViewport(int x, int y, int w, int h);
+
 	inline int GetWidth() const { return mWidth; }
 	inline int GetHeight() const { return mHeight; }
 	inline GLFWwindow* GetWindow() const { return mWindow; }
@@ -20,6 +22,7 @@ public:
 private:
 	int mWidth, mHeight;
 	const char* mTitle;
+	int mViewportX, mViewportY, mViewportW, mViewportH;
 
 	GLFWwindow* mWindow;
 };

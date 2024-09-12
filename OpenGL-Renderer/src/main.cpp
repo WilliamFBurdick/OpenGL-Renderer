@@ -15,13 +15,20 @@
 #include "Window/Window.h"
 #include "Tests/Test.h"
 #include "Tests/TestBlending.h"
+#include "Tests/TestPostProcessing.h"
+
+const int PROPERTIES_WIDTH = 250;
+const int DEMO_SELECTION_WIDTH = 250;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+void RenderPropertiesTab(Window& window, test::Test*& test);
+void RenderDemoList(Window& window, test::TestMenu*& testMenu);
+
 int main(int argc, char* argv[])
 {
-	Window window;
+	Window window(1280, 720, "OpenGL Renderer");
 	Renderer renderer;
 
 	if (!window.Init())
@@ -37,6 +44,7 @@ int main(int argc, char* argv[])
 	currentTest = testMenu;
 
 	testMenu->RegisterTest<test::TestBlending>("Blending");
+	testMenu->RegisterTest<test::TestPostProcessing>("Post Processing");
 
 	while (!glfwWindowShouldClose(window.GetWindow()))
 	{
@@ -52,15 +60,10 @@ int main(int argc, char* argv[])
 		if (currentTest)
 		{
 			currentTest->OnUpdate(deltaTime);
+			window.SetViewport(DEMO_SELECTION_WIDTH, 0, window.GetWidth() - DEMO_SELECTION_WIDTH - PROPERTIES_WIDTH, window.GetHeight());
 			currentTest->OnRender();
-			ImGui::Begin("test");
-			currentTest->OnImGuiRender();
-			if (currentTest != testMenu && ImGui::Button("<-"))
-			{
-				delete currentTest;
-				currentTest = testMenu;
-			}
-			ImGui::End();
+			RenderPropertiesTab(window, currentTest);
+			RenderDemoList(window, testMenu);
 		}
 
 		ImGui::Render();
@@ -71,7 +74,7 @@ int main(int argc, char* argv[])
 	}
 
 	delete currentTest;
-	if (testMenu)
+	if (testMenu != currentTest)
 		delete testMenu;
 
 	ImGui_ImplOpenGL3_Shutdown();
@@ -79,4 +82,41 @@ int main(int argc, char* argv[])
 	ImGui::DestroyContext();
 	glfwTerminate();
 	return 0;
+}
+
+void RenderPropertiesTab(Window& window, test::Test*& test)
+{
+	ImGui::Begin("Properties", nullptr,
+		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoMove | ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse);
+
+	ImVec2 panelPos = ImVec2(window.GetWidth() - PROPERTIES_WIDTH, 0);
+	ImVec2 panelSize = ImVec2(PROPERTIES_WIDTH, window.GetHeight());
+
+	ImGui::SetWindowPos(panelPos);
+	ImGui::SetWindowSize(panelSize);
+
+	// Draw properties window
+	if (!static_cast<test::TestMenu*>(test))
+	{
+		test->OnImGuiRender();
+	}
+
+	ImGui::End();
+}
+
+void RenderDemoList(Window& window, test::TestMenu*& testMenu)
+{
+	ImGui::Begin("Demo List", nullptr, 
+		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoMove | ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse);
+
+	ImVec2 panelPos = ImVec2(0, 0);
+	ImVec2 panelSize = ImVec2(DEMO_SELECTION_WIDTH, window.GetHeight());
+
+	ImGui::SetWindowPos(panelPos);
+	ImGui::SetWindowSize(panelSize);
+
+	// Draw selectable scenes
+	testMenu->OnImGuiRender();
+
+	ImGui::End();
 }

@@ -5,6 +5,8 @@ Window::Window(int width, int height, const char* title):
 	mWidth(width), mHeight(height), mTitle(title)
 {
 	mWindow = nullptr;
+	mViewportX = 0; mViewportY = 0;
+	mViewportW = mWidth; mViewportH = mHeight;
 }
 
 Window::~Window()
@@ -19,6 +21,8 @@ bool Window::Init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 	// Set swap interval to 1:1
 	glfwSwapInterval(1);
@@ -43,7 +47,7 @@ bool Window::Init()
 		return false;
 	}
 
-	glViewport(0, 0, mWidth, mHeight);
+	glViewport(mViewportX, mViewportY, mViewportW, mViewportH);
 
 	glfwSetFramebufferSizeCallback(mWindow, ResizeWindow);
 
@@ -55,6 +59,13 @@ bool Window::Init()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return true;
+}
+
+void Window::SetViewport(int x, int y, int w, int h)
+{
+	mViewportX = x; mViewportY = y;
+	mViewportW = w; mViewportH = h;
+	glViewport(mViewportX, mViewportY, mViewportW, mViewportH);
 }
 
 void Window::ResizeWindow(GLFWwindow* window, int width, int height)
