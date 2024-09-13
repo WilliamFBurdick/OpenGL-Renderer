@@ -3,6 +3,10 @@
 #include "Input/Input.h"
 #include "Renderer.h"
 
+Renderer renderer;
+
+unsigned int cubeVAO, cubeVBO;
+
 test::TestBlending::TestBlending(Window* window) :
     Test(window), mShader("res/shaders/unlit.vert", "res/shaders/unlit.frag"),
     mMarble("res/textures/marble.jpg"), mFloor("res/textures/wood.png"), mTransparent("res/textures/window.png")
@@ -74,16 +78,31 @@ test::TestBlending::TestBlending(Window* window) :
         1.0f,  0.5f,  0.0f,  1.0f,  0.0f
     };
 
+
+    glGenVertexArrays(1, &cubeVAO);
+    glGenBuffers(1, &cubeVBO);
+    glBindVertexArray(cubeVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    
+
     // Set up Vertex Arrays (they all have the same layout, so one layout is fine)
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(2);
-    mCubeVAO.AddBuffer(VertexBuffer(cubeVertices, sizeof(cubeVertices)), layout);
-    mPlaneVAO.AddBuffer(VertexBuffer(planeVertices, sizeof(planeVertices)), layout);
-    mTransparentVAO.AddBuffer(VertexBuffer(transparentVertices, sizeof(transparentVertices)), layout);
+    mCubeVBO = VertexBuffer(cubeVertices, sizeof(cubeVertices));
+    mCubeVAO.AddBuffer(mCubeVBO, layout);
+    mPlaneVBO = VertexBuffer(planeVertices, sizeof(planeVertices));
+    mPlaneVAO.AddBuffer(mPlaneVBO, layout);
+    mTransparentVBO = VertexBuffer(transparentVertices, sizeof(transparentVertices));
+    mTransparentVAO.AddBuffer(mTransparentVBO, layout);
 
     // Create camera
-    mCamera = Camera();
+    mCamera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 }
 
 test::TestBlending::~TestBlending()
@@ -131,11 +150,27 @@ void test::TestBlending::OnRender()
     mShader.SetMat4("projection", proj);
 
     // Draw cubes
+    mCubeVAO.Bind();
     mMarble.Bind(0);
     model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
     mShader.SetMat4("model", model);
+    renderer.Draw(mCubeVAO, 36, mShader);
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+    mShader.SetMat4("model", model);
+    renderer.Draw(mCubeVAO, 36, mShader);
 
+    mCubeVAO.Bind();
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    // Floor
+    mPlaneVAO.Bind();
+    mFloor.Bind(0);
+    model = glm::mat4(1.0f);
+    mShader.SetMat4("model", model);
+    renderer.Draw(mPlaneVAO, 6, mShader);
 
+    glBindVertexArray(cubeVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
 void test::TestBlending::OnImGuiRender()

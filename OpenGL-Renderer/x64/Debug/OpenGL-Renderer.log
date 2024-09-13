@@ -1,4 +1,4 @@
 ﻿  TestBlending.cpp
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(96,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(96,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(117,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(117,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

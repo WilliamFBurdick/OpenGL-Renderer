@@ -19,6 +19,7 @@ namespace test
 	private:
 		bool mSort = true;
 		VertexArray mCubeVAO, mPlaneVAO, mTransparentVAO;
+		VertexBuffer mCubeVBO, mPlaneVBO, mTransparentVBO;
 		Camera mCamera;
 
 		Texture mMarble, mFloor, mTransparent;
