@@ -1,6 +1,6 @@
 #include "TestPostProcessing.h"
 
-test::TestPostProcessing::TestPostProcessing()
+test::TestPostProcessing::TestPostProcessing(Window* window): Test(window)
 {
 }
 

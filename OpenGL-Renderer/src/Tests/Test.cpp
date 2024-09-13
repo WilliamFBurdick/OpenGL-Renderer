@@ -3,8 +3,8 @@
 
 namespace test
 {
-	TestMenu::TestMenu(Test*& currentTest):
-		mCurrentTest(currentTest)
+	TestMenu::TestMenu(Window* window, Test*& currentTest):
+		Test(window), mCurrentTest(currentTest)
 	{
 
 	}
@@ -15,7 +15,7 @@ namespace test
 		{
 			if (ImGui::Button(test.first.c_str()))
 			{
-				mCurrentTest = test.second();
+				mCurrentTest = test.second(mWindow);
 			}
 		}
 	}

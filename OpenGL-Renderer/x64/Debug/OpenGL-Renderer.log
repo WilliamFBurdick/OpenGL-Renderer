@@ -1,6 +1,4 @@
-﻿  main.cpp
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(51,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(92,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(93,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(113,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\Source\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+﻿  TestBlending.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(96,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(96,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

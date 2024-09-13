@@ -13,7 +13,11 @@ public:
 	void Unbind() const;
 
 	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
+	void AddIndex(const IndexBuffer& ib);
+
+	inline bool HasIndexBuffer() const { return mHasIndexBuffer; }
 private:
 	unsigned int mRendererID;
+	bool mHasIndexBuffer;
 };
 

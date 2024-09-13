@@ -11,6 +11,9 @@
 #include <string>
 #include <sstream>
 
+#include "Camera/Camera.h"
+#include "Input/Input.h"
+
 #include "Renderer.h"
 #include "Window/Window.h"
 #include "Tests/Test.h"
@@ -28,25 +31,25 @@ void RenderDemoList(Window& window, test::TestMenu*& testMenu);
 
 int main(int argc, char* argv[])
 {
-	Window window(1280, 720, "OpenGL Renderer");
+	Window* window = new Window(1280, 720, "OpenGL Renderer");
 	Renderer renderer;
 
-	if (!window.Init())
+	if (!window->Init())
 		return -1;
 
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window.GetWindow(), true);
+	ImGui_ImplGlfw_InitForOpenGL(window->GetWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 
 	test::Test* currentTest = nullptr;
-	test::TestMenu* testMenu = new test::TestMenu(currentTest);
+	test::TestMenu* testMenu = new test::TestMenu(window, currentTest);
 	currentTest = testMenu;
 
 	testMenu->RegisterTest<test::TestBlending>("Blending");
 	testMenu->RegisterTest<test::TestPostProcessing>("Post Processing");
 
-	while (!glfwWindowShouldClose(window.GetWindow()))
+	while (!glfwWindowShouldClose(window->GetWindow()))
 	{
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;;
@@ -60,17 +63,18 @@ int main(int argc, char* argv[])
 		if (currentTest)
 		{
 			currentTest->OnUpdate(deltaTime);
-			window.SetViewport(DEMO_SELECTION_WIDTH, 0, window.GetWidth() - DEMO_SELECTION_WIDTH - PROPERTIES_WIDTH, window.GetHeight());
+			window->SetViewport(DEMO_SELECTION_WIDTH, 0, window->GetWidth() - DEMO_SELECTION_WIDTH - PROPERTIES_WIDTH, window->GetHeight());
 			currentTest->OnRender();
-			RenderPropertiesTab(window, currentTest);
-			RenderDemoList(window, testMenu);
+			RenderPropertiesTab(*window, currentTest);
+			RenderDemoList(*window, testMenu);
 		}
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		glfwSwapBuffers(window.GetWindow());
+		glfwSwapBuffers(window->GetWindow());
 		glfwPollEvents();
+		Input::Update(window->GetWindow());
 	}
 
 	delete currentTest;
@@ -95,11 +99,8 @@ void RenderPropertiesTab(Window& window, test::Test*& test)
 	ImGui::SetWindowPos(panelPos);
 	ImGui::SetWindowSize(panelSize);
 
-	// Draw properties window
-	if (!static_cast<test::TestMenu*>(test))
-	{
+	if (dynamic_cast<test::TestMenu*>(test) == nullptr)
 		test->OnImGuiRender();
-	}
 
 	ImGui::End();
 }

@@ -6,7 +6,7 @@ namespace test
 	class TestPostProcessing : public Test
 	{
 	public:
-		TestPostProcessing();
+		TestPostProcessing(Window* window);
 		~TestPostProcessing();
 
 		void OnUpdate(float deltaTime) override;

@@ -2,6 +2,7 @@
 
 VertexArray::VertexArray()
 {
+	mHasIndexBuffer = false;
 	glGenVertexArrays(1, &mRendererID);
 }
 
@@ -33,4 +34,11 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.GetStride(), (void*)offset);
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
+}
+
+void VertexArray::AddIndex(const IndexBuffer& ib)
+{
+	Bind();
+	ib.Bind();
+	mHasIndexBuffer = true;
 }
