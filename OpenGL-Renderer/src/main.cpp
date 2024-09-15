@@ -14,11 +14,11 @@
 #include "Camera/Camera.h"
 #include "Input/Input.h"
 
-#include "Renderer.h"
 #include "Window/Window.h"
 #include "Tests/Test.h"
 #include "Tests/TestBlending.h"
 #include "Tests/TestPostProcessing.h"
+#include "Tests/TestLighting.h"
 
 const int PROPERTIES_WIDTH = 250;
 const int DEMO_SELECTION_WIDTH = 250;
@@ -32,7 +32,6 @@ void RenderDemoList(Window& window, test::TestMenu*& testMenu);
 int main(int argc, char* argv[])
 {
 	Window* window = new Window(1280, 720, "OpenGL Renderer");
-	Renderer renderer;
 
 	if (!window->Init())
 		return -1;
@@ -46,6 +45,7 @@ int main(int argc, char* argv[])
 	test::TestMenu* testMenu = new test::TestMenu(window, currentTest);
 	currentTest = testMenu;
 
+	testMenu->RegisterTest<test::TestLighting>("Lighting");
 	testMenu->RegisterTest<test::TestBlending>("Blending");
 	testMenu->RegisterTest<test::TestPostProcessing>("Post Processing");
 
@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
 		deltaTime = currentFrame - lastFrame;;
 		lastFrame = currentFrame;
 
-		renderer.Clear();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 		if (currentTest)
 		{
 			currentTest->OnUpdate(deltaTime);
-			window->SetViewport(DEMO_SELECTION_WIDTH, 0, window->GetWidth() - DEMO_SELECTION_WIDTH - PROPERTIES_WIDTH, window->GetHeight());
+			//window->SetViewport(DEMO_SELECTION_WIDTH, 0, window->GetWidth() - DEMO_SELECTION_WIDTH - PROPERTIES_WIDTH, window->GetHeight());
 			currentTest->OnRender();
 			RenderPropertiesTab(*window, currentTest);
 			RenderDemoList(*window, testMenu);

@@ -1,9 +1,9 @@
 #pragma once
 #include "Test.h"
-#include "VertexArray/VertexArray.h"
 #include "Camera/Camera.h"
 #include "Shader/Shader.h"
 #include "Texture/Texture.h"
+#include "VertexArray/VAO.h"
 
 namespace test
 {
@@ -18,15 +18,15 @@ namespace test
 		void OnImGuiRender() override;
 	private:
 		bool mSort = true;
-		VertexArray mCubeVAO, mPlaneVAO, mTransparentVAO;
-		VertexBuffer mCubeVBO, mPlaneVBO, mTransparentVBO;
 		Camera mCamera;
 
 		Texture mMarble, mFloor, mTransparent;
-
 		std::vector<glm::vec3> mWindowPositions;
 
 		Shader mShader;
+
+		VAO mCubeVAO, mPlaneVAO, mTransparentVAO;
+		VBO mCubeVBO, mPlaneVBO, mTransparentVBO;
 	};
 }
 

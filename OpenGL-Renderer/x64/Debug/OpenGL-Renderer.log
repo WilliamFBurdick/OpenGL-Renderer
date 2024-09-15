@@ -1,4 +1,6 @@
-﻿  TestBlending.cpp
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(117,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp(117,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+﻿  TestLighting.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(98,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(98,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(246,54): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(261,52): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

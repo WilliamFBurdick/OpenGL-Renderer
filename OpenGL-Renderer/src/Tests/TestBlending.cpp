@@ -1,16 +1,22 @@
 #include "TestBlending.h"
 #include <imgui/imgui.h>
 #include "Input/Input.h"
-#include "Renderer.h"
+#include <map>
 
-Renderer renderer;
 
 unsigned int cubeVAO, cubeVBO;
 
 test::TestBlending::TestBlending(Window* window) :
     Test(window), mShader("res/shaders/unlit.vert", "res/shaders/unlit.frag"),
-    mMarble("res/textures/marble.jpg"), mFloor("res/textures/wood.png"), mTransparent("res/textures/window.png")
+    mMarble("res/textures/marble.jpg"), mFloor("res/textures/metal.png"), mTransparent("res/textures/window.png")
 {
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_STENCIL_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	mSort = true;
 
     float cubeVertices[] = {
@@ -78,28 +84,28 @@ test::TestBlending::TestBlending(Window* window) :
         1.0f,  0.5f,  0.0f,  1.0f,  0.0f
     };
 
+    mCubeVAO.Bind();
+    mCubeVBO = VBO(cubeVertices, sizeof(cubeVertices));
+    mCubeVAO.AddAttribute(mCubeVBO, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+    mCubeVAO.AddAttribute(mCubeVBO, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
-    glGenVertexArrays(1, &cubeVAO);
-    glGenBuffers(1, &cubeVBO);
-    glBindVertexArray(cubeVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    
+    mPlaneVAO.Bind();
+    mPlaneVBO = VBO(planeVertices, sizeof(planeVertices));
+    mPlaneVAO.AddAttribute(mCubeVBO, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+    mPlaneVAO.AddAttribute(mCubeVBO, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
-    // Set up Vertex Arrays (they all have the same layout, so one layout is fine)
-    VertexBufferLayout layout;
-    layout.Push<float>(3);
-    layout.Push<float>(2);
-    mCubeVBO = VertexBuffer(cubeVertices, sizeof(cubeVertices));
-    mCubeVAO.AddBuffer(mCubeVBO, layout);
-    mPlaneVBO = VertexBuffer(planeVertices, sizeof(planeVertices));
-    mPlaneVAO.AddBuffer(mPlaneVBO, layout);
-    mTransparentVBO = VertexBuffer(transparentVertices, sizeof(transparentVertices));
-    mTransparentVAO.AddBuffer(mTransparentVBO, layout);
+    mTransparentVAO.Bind();
+    mTransparentVBO = VBO(transparentVertices, sizeof(transparentVertices));
+    mTransparentVAO.AddAttribute(mCubeVBO, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+    mTransparentVAO.AddAttribute(mCubeVBO, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+
+    mWindowPositions = std::vector<glm::vec3>({
+            glm::vec3(-1.5f, 0.0f, -0.48f),
+            glm::vec3(1.5f, 0.0f, 0.51f),
+            glm::vec3(0.0f, 0.0f, 0.7f),
+            glm::vec3(-0.3f, 0.0f, -2.3f),
+            glm::vec3(0.5f, 0.0f, -0.6f)
+        });
 
     // Create camera
     mCamera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -140,37 +146,67 @@ void test::TestBlending::OnRender()
 {
     // Set up view/projection
     mShader.use();
-    glm::mat4 view = mCamera.GetViewMatrix();
     int x, y, w, h;
     mWindow->GetViewport(x, y, w, h);
     glm::mat4 proj = glm::perspective(mCamera.Zoom, (float)w / (float)h, 0.1f, 100.0f);
+    glm::mat4 view = mCamera.GetViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
     // Set uniforms
     mShader.SetMat4("view", view);
     mShader.SetMat4("projection", proj);
+    mShader.SetMat4("model", model);
 
     // Draw cubes
-    mCubeVAO.Bind();
     mMarble.Bind(0);
-    model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-    mShader.SetMat4("model", model);
-    renderer.Draw(mCubeVAO, 36, mShader);
-    model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-    mShader.SetMat4("model", model);
-    renderer.Draw(mCubeVAO, 36, mShader);
-
     mCubeVAO.Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    // Floor
-    mPlaneVAO.Bind();
-    mFloor.Bind(0);
-    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0));
     mShader.SetMat4("model", model);
-    renderer.Draw(mPlaneVAO, 6, mShader);
-
-    glBindVertexArray(cubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0));
+    mShader.SetMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+
+    // Draw floor
+    mFloor.Bind(0);
+    mPlaneVAO.Bind();
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, 4.5f, 0.0f));
+    model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(10.f));
+    mShader.SetMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    // Sort windows (optionally) and draw
+    mTransparent.Bind(0);
+    mTransparentVAO.Bind();
+    if (mSort)
+    {
+        std::map<float, glm::vec3> sorted;
+        for (unsigned int i = 0; i < mWindowPositions.size(); i++)
+        {
+            float distance = glm::length(mCamera.Position - mWindowPositions[i]);
+            sorted[distance] = mWindowPositions[i];
+        }
+        for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, it->second);
+            mShader.SetMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            
+        }
+    }
+    else
+    {
+        for (unsigned int i = 0; i < mWindowPositions.size(); i++)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, mWindowPositions[i]);
+            mShader.SetMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
+    }
 }
 
 void test::TestBlending::OnImGuiRender()
