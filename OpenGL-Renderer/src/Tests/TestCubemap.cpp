@@ -186,18 +186,6 @@ void test::TestCubemap::OnRender()
     glm::mat4 view = mCamera.GetViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 
-    // Draw skybox
-    glDepthMask(GL_FALSE);
-    mSkyboxShader.use();
-    glm::mat4 skyboxView = glm::mat4(glm::mat3(mCamera.GetViewMatrix()));
-    mSkyboxShader.SetMat4("view", skyboxView);
-    mSkyboxShader.SetMat4("projection", proj);
-    mSkyboxShader.SetInt("skybox", 0);
-    mSkyboxVAO.Bind();
-    glBindTexture(GL_TEXTURE_CUBE_MAP, mCubemap);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glDepthMask(GL_TRUE);
-
     // DRAW OBJECTS
 
     // Set uniforms
@@ -222,6 +210,18 @@ void test::TestCubemap::OnRender()
     model = glm::mat4(1.0f);
     mObjectShader.SetMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    // Draw skybox
+    glDepthFunc(GL_LEQUAL);
+    mSkyboxShader.use();
+    glm::mat4 skyboxView = glm::mat4(glm::mat3(mCamera.GetViewMatrix()));
+    mSkyboxShader.SetMat4("view", skyboxView);
+    mSkyboxShader.SetMat4("projection", proj);
+    mSkyboxShader.SetInt("skybox", 0);
+    mSkyboxVAO.Bind();
+    glBindTexture(GL_TEXTURE_CUBE_MAP, mCubemap);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glDepthFunc(GL_LESS);
 }
 
 void test::TestCubemap::OnImGuiRender()

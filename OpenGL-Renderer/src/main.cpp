@@ -20,6 +20,7 @@
 #include "Tests/TestPostProcessing.h"
 #include "Tests/TestLighting.h"
 #include "Tests/TestCubemap.h"
+#include "Tests/TestShadows.h"
 
 const int PROPERTIES_WIDTH = 250;
 const int DEMO_SELECTION_WIDTH = 250;
@@ -49,7 +50,8 @@ int main(int argc, char* argv[])
 	testMenu->RegisterTest<test::TestLighting>("Lighting");
 	testMenu->RegisterTest<test::TestBlending>("Blending");
 	testMenu->RegisterTest<test::TestPostProcessing>("Post Processing");
-	testMenu->RegisterTest<test::TestCubemap>("Cubemap");
+	testMenu->RegisterTest<test::TestCubemap>("Skybox");
+	testMenu->RegisterTest<test::TestShadows>("Shadows");
 
 	while (!glfwWindowShouldClose(window->GetWindow()))
 	{

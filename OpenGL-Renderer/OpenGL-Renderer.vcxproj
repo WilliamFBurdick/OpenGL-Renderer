@@ -168,6 +168,7 @@
     <ClCompile Include="src\Tests\TestPostProcessing.cpp" />
     <ClCompile Include="src\VertexArray\Buffers\VBO.cpp" />
     <ClCompile Include="src\Tests\TestLighting.cpp" />
+    <ClCompile Include="src\Tests\TestShadows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\imgui\imconfig.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="..\includes\stb_image.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Camera\Camera.h" />
+    <ClInclude Include="src\Lights\Lights.h" />
     <ClInclude Include="src\Tests\Test.h" />
     <ClInclude Include="src\Shader\Shader.h" />
     <ClInclude Include="src\Tests\TestCubemap.h" />
@@ -192,6 +194,7 @@
     <ClInclude Include="src\Tests\TestPostProcessing.h" />
     <ClInclude Include="src\VertexArray\Buffers\VBO.h" />
     <ClInclude Include="src\Tests\TestLighting.h" />
+    <ClInclude Include="src\Tests\TestShadows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\color.frag" />
