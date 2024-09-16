@@ -2,6 +2,8 @@
 #include "Test.h"
 #include "Texture/Texture.h"
 #include "Shader/Shader.h"
+#include "VertexArray/VAO.h"
+#include "Camera/Camera.h"
 
 namespace test
 {
@@ -15,6 +17,12 @@ namespace test
 		void OnRender() override;
 		void OnImGuiRender() override;
 	private:
-		Texture mCubemap;
+		Texture mCube, mFloor;
+		unsigned int mCubemap;
+		Shader mSkyboxShader, mObjectShader;
+		VAO mSkyboxVAO, mCubeVAO, mPlaneVAO;
+		VBO mSkyboxVBO, mCubeVBO, mPlaneVBO;
+
+		Camera mCamera;
 	};
 }

@@ -156,5 +156,9 @@
     <None Include="res\shaders\unlit.vert" />
     <None Include="res\shaders\postprocessing.vert" />
     <None Include="res\shaders\postprocessing.frag" />
+    <None Include="res\shaders\skybox.frag" />
+    <None Include="res\shaders\skybox.vert" />
+    <None Include="res\shaders\cubemap.vert" />
+    <None Include="res\shaders\cubemap.frag" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,11 @@
-﻿  TestLighting.cpp
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(98,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(98,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(246,54): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp(261,52): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+﻿  TestCubemap.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestCubemap.cpp(156,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestCubemap.cpp(156,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(56,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(98,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(99,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(116,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

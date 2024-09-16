@@ -27,8 +27,6 @@ Texture::Texture(const char* path):
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-
-		mTextureType = GL_TEXTURE_2D;
 	}
 	else
 	{
@@ -47,27 +45,6 @@ Texture::Texture(GLenum format, unsigned int width, unsigned int height):
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mRendererID, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	mTextureType = GL_TEXTURE_2D;
-}
-
-Texture::Texture(std::vector<const char*> paths)
-{
-	glGenTextures(1, &mRendererID);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, mRendererID);
-	for (unsigned int i = 0; i < paths.size(); i++)
-	{
-		mLocalBuffer = stbi_load(paths[i], &mWidth, &mHeight, &mBitsPerPixel, 0);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, mWidth, mHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, mLocalBuffer);
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
-	mTextureType = GL_TEXTURE_CUBE_MAP;
 }
 
 Texture::~Texture()
@@ -78,5 +55,5 @@ Texture::~Texture()
 void Texture::Bind(unsigned int slot)
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(mTextureType, mRendererID);
+	glBindTexture(GL_TEXTURE_2D, mRendererID);
 }
