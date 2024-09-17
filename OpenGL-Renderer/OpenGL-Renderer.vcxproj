@@ -205,6 +205,10 @@
     <None Include="res\shaders\phong.vert" />
     <None Include="res\shaders\postprocessing.frag" />
     <None Include="res\shaders\postprocessing.vert" />
+    <None Include="res\shaders\shadowmapping.frag" />
+    <None Include="res\shaders\shadowmapping.vert" />
+    <None Include="res\shaders\simpledepth.frag" />
+    <None Include="res\shaders\simpledepth.vert" />
     <None Include="res\shaders\skybox.frag" />
     <None Include="res\shaders\skybox.vert" />
     <None Include="res\shaders\unlit.frag" />
