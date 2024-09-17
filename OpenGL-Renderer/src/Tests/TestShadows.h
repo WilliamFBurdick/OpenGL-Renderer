@@ -26,14 +26,17 @@ namespace test
         std::vector<PointLight> mPointLights;
         std::vector<SpotLight> mSpotLights;
 
-        Shader mSimpleDepth;
+        Shader mSimpleDepth, mObjectShader;
         Texture mWood;
 
         unsigned int mShadowMapFBO;
         unsigned int mShadowWidth, mShadowHeight;
         unsigned int mDepthMap;
 
+        glm::vec3 mLightPos;
+
         unsigned int GenerateShadowmap(int width, int height);
+        void RenderScene(const Shader& shader);
     };
 }
 
