@@ -5,8 +5,13 @@
 class Texture
 {
 public:
+	enum class Type
+	{
+		Diffuse, Specular, Buffer
+	};
+
 	// Constructor for loading single texture
-	Texture(const char* path);
+	Texture(const char* path, Type type);
 	// Constructor for generating texture (created empty)
 	Texture(GLenum format, unsigned int width, unsigned int height);
 	Texture() {}
@@ -14,14 +19,10 @@ public:
 
 	void Bind(unsigned int slot = 0);
 
-	inline int GetWidth() const { return mWidth; }
-	inline int GetHeight() const { return mHeight; }
-
 	inline unsigned int GetID() const { return mRendererID; }
+	inline Type GetType() const { return mType; }
 private:
 	unsigned int mRendererID;
-	const char* mFilePath;
-	unsigned char* mLocalBuffer;
-	int mWidth, mHeight, mBitsPerPixel;
+	Type mType;
 };
 

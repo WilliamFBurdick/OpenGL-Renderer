@@ -1,20 +1,39 @@
 #pragma once
+#include <glad/glad.h>
+#include <glm/glm.hpp>
 #include <string>
 #include <vector>
-#include "VertexArray/VAO.h"
-#include "Camera/Camera.h"
-#include "Texture/Texture.h"
+
 #include "Shader/Shader.h"
+
+using namespace std;
+
+struct Vertex
+{
+	glm::vec3 Position;
+	glm::vec3 Normal;
+	glm::vec2 TexCoords;
+};
+
+struct Texture
+{
+	unsigned int id;
+	string type;
+	string path;
+};
 
 class Mesh
 {
 public:
-	std::vector<Vertex> Vertices;
-	std::vector<GLuint> Indices;
-	std::vector <Texture> Textures;
+	vector<Vertex> vertices;
+	vector<unsigned int> indices;
+	vector<Texture> textures;
 
-	VAO VAO;
-	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
-	void Draw(Shader& shader, Camera& camera);
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	void Draw(Shader& shader);
+private:
+	unsigned int VAO, VBO, EBO;
+
+	void SetupMesh();
 };
 

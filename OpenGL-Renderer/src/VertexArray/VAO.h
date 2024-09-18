@@ -1,6 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include "Buffers/VBO.h"
+#include "Buffers/EBO.h"
 
 class VAO
 {

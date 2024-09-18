@@ -1,24 +1,25 @@
 #include "Texture.h"
 #include <stb_image.h>
 
-Texture::Texture(const char* path):
-	mFilePath(path)
+Texture::Texture(const char* path, Type type):
+	mType(type)
 {
 	stbi_set_flip_vertically_on_load(true);
 	glGenTextures(1, &mRendererID);
-	mLocalBuffer = stbi_load(path, &mWidth, &mHeight, &mBitsPerPixel, 0);
-	if (mLocalBuffer)
+	int width, height, bitsPerPixel;
+	unsigned char* data = stbi_load(path, &width, &height, &bitsPerPixel, 0);
+	if (data)
 	{
 		GLenum format;
-		if (mBitsPerPixel == 1)
+		if (bitsPerPixel == 1)
 			format = GL_RED;
-		if (mBitsPerPixel == 3)
+		if (bitsPerPixel == 3)
 			format = GL_RGB;
-		if (mBitsPerPixel == 4)
+		if (bitsPerPixel == 4)
 			format = GL_RGBA;
 
 		glBindTexture(GL_TEXTURE_2D, mRendererID);
-		glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, mLocalBuffer);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -31,13 +32,13 @@ Texture::Texture(const char* path):
 	else
 	{
 		printf("Failed to load texture at path: %s\n", path);
-		stbi_image_free(mLocalBuffer);
+		stbi_image_free(data);
 	}
 }
 
 Texture::Texture(GLenum format, unsigned int width, unsigned int height):
-	mWidth(width), mHeight(height), mLocalBuffer(), mBitsPerPixel(3), mFilePath()
 {
+	mType = Texture::Type::Buffer;
 	glGenTextures(1, &mRendererID);
 	glBindTexture(GL_TEXTURE_2D, mRendererID);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
