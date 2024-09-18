@@ -30,6 +30,7 @@ float lastFrame = 0.0f;
 
 void RenderPropertiesTab(Window& window, test::Test*& test);
 void RenderDemoList(Window& window, test::TestMenu*& testMenu);
+void RenderFPS(Window& window, const float deltaTime);
 
 int main(int argc, char* argv[])
 {
@@ -69,6 +70,7 @@ int main(int argc, char* argv[])
 			currentTest->OnUpdate(deltaTime);
 			//window->SetViewport(DEMO_SELECTION_WIDTH, 0, window->GetWidth() - DEMO_SELECTION_WIDTH - PROPERTIES_WIDTH, window->GetHeight());
 			currentTest->OnRender();
+			RenderFPS(*window, deltaTime);
 			RenderPropertiesTab(*window, currentTest);
 			RenderDemoList(*window, testMenu);
 		}
@@ -90,6 +92,12 @@ int main(int argc, char* argv[])
 	ImGui::DestroyContext();
 	glfwTerminate();
 	return 0;
+}
+
+void RenderFPS(Window& window, const float deltaTime)
+{
+	float fps = 1.0f / deltaTime;
+	printf("FPS: %f\n", fps);
 }
 
 void RenderPropertiesTab(Window& window, test::Test*& test)

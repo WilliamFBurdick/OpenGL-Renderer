@@ -1,4 +1,1 @@
-﻿  TestCubemap.cpp
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestCubemap.cpp(156,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestCubemap.cpp(156,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+﻿  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

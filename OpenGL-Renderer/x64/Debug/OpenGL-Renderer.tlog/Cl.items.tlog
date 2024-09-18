@@ -6,6 +6,7 @@ C:\Users\Wburdick\source\repos\OpenGL-Renderer\includes\imgui\imgui_impl_opengl3
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\includes\imgui\imgui_tables.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\imgui_tables.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\includes\imgui\imgui_widgets.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\imgui_widgets.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\libs\glad.c;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\glad.obj
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\VertexArray\Buffers\EBO.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\EBO.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Input\Input.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\Input.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Camera\Camera.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\Camera.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\Test.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\Test.obj
@@ -19,3 +20,4 @@ C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBle
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestPostProcessing.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\TestPostProcessing.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\VertexArray\Buffers\VBO.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\VBO.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestLighting.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\TestLighting.obj
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestShadows.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\TestShadows.obj

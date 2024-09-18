@@ -155,9 +155,7 @@
     <ClCompile Include="..\includes\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\includes\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\libs\glad.c" />
-    <ClCompile Include="src\Mesh\Model.cpp" />
     <ClCompile Include="src\VertexArray\Buffers\EBO.cpp" />
-    <ClCompile Include="src\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Camera\Camera.cpp" />
     <ClCompile Include="src\Tests\Test.cpp" />
@@ -184,10 +182,7 @@
     <ClInclude Include="..\includes\imgui\imstb_textedit.h" />
     <ClInclude Include="..\includes\imgui\imstb_truetype.h" />
     <ClInclude Include="..\includes\stb_image.h" />
-    <ClInclude Include="src\Mesh\Entity.h" />
-    <ClInclude Include="src\Mesh\Model.h" />
     <ClInclude Include="src\VertexArray\Buffers\EBO.h" />
-    <ClInclude Include="src\Mesh\Mesh.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Camera\Camera.h" />
     <ClInclude Include="src\Lights\Lights.h" />

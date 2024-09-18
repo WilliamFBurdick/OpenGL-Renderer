@@ -1,3 +1,5 @@
+#pragma once
+
 struct DirectionalLight
 {
 	glm::vec3 direction;

@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include <stb_image.h>
 
-Texture::Texture(const char* path, Type type):
+Texture::Texture(const char* path, TextureType type):
 	mType(type)
 {
 	stbi_set_flip_vertically_on_load(true);
@@ -36,9 +36,9 @@ Texture::Texture(const char* path, Type type):
 	}
 }
 
-Texture::Texture(GLenum format, unsigned int width, unsigned int height):
+Texture::Texture(GLenum format, unsigned int width, unsigned int height)
 {
-	mType = Texture::Type::Buffer;
+	mType = TextureType::Buffer;
 	glGenTextures(1, &mRendererID);
 	glBindTexture(GL_TEXTURE_2D, mRendererID);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
