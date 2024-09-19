@@ -19,21 +19,19 @@ namespace test
         void OnImGuiRender() override;
     private:
         Camera mCamera;
-        VAO mCubeVAO, mPlaneVAO;
-        VBO mCubeVBO, mPlaneVBO;
+        VAO mCubeVAO, mPlaneVAO, mQuadVAO;
+        VBO mCubeVBO, mPlaneVBO, mQuadVBO;
 
         DirectionalLight mDirLight;
         std::vector<PointLight> mPointLights;
         std::vector<SpotLight> mSpotLights;
 
-        Shader mSimpleDepth, mObjectShader;
+        Shader mSimpleDepth, mObjectShader, mDebugQuad;
         Texture mWood;
 
         unsigned int mShadowMapFBO;
         unsigned int mShadowWidth, mShadowHeight;
         unsigned int mDepthMap;
-
-        glm::vec3 mLightPos;
 
         unsigned int GenerateShadowmap(int width, int height);
         void RenderScene(const Shader& shader);

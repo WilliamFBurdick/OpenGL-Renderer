@@ -199,10 +199,14 @@
     <ClInclude Include="src\Tests\TestShadows.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\blinn_phong.frag" />
+    <None Include="res\shaders\blinn_phong.vert" />
     <None Include="res\shaders\color.frag" />
     <None Include="res\shaders\color.vert" />
     <None Include="res\shaders\cubemap.frag" />
     <None Include="res\shaders\cubemap.vert" />
+    <None Include="res\shaders\debug_quad.frag" />
+    <None Include="res\shaders\debug_quad.vert" />
     <None Include="res\shaders\phong.frag" />
     <None Include="res\shaders\phong.vert" />
     <None Include="res\shaders\postprocessing.frag" />

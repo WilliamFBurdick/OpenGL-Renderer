@@ -4,7 +4,8 @@
 
 test::TestLighting::TestLighting(Window* window):
 	Test(window),
-	mPhongShader("res/shaders/phong.vert", "res/shaders/phong.frag"), mColorShader("res/shaders/color.vert", "res/shaders/color.frag"),
+	mPhongShader("res/shaders/phong.vert", "res/shaders/phong.frag"), mBlinnPhongShader("res/shaders/blinn_phong.vert", "res/shaders/blinn_phong.frag"),
+    mColorShader("res/shaders/color.vert", "res/shaders/color.frag"),
     mCube_D("res/textures/container2.png"), mCube_S("res/textures/container2_specular.png"),
     mFloor_D("res/textures/metal.png")
 {
@@ -85,6 +86,8 @@ test::TestLighting::TestLighting(Window* window):
     mDirLight.ambient = glm::vec3(0.05f);
     mDirLight.diffuse = glm::vec3(0.4f);
     mDirLight.specular = glm::vec3(0.5f);
+
+    mSelectedShader = 1;
 }
 
 test::TestLighting::~TestLighting()
@@ -122,15 +125,18 @@ void test::TestLighting::OnRender()
     // Set up view/projection
     int x, y, w, h;
     mWindow->GetViewport(x, y, w, h);
-    mPhongShader.use();
+
+    Shader* currentShader = (mSelectedShader == 0) ? &mPhongShader : &mBlinnPhongShader;
+
+    currentShader->use();
     glm::mat4 proj = glm::perspective(mCamera.Zoom, (float)w / (float)h, 0.1f, 100.0f);
     glm::mat4 view = mCamera.GetViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
     // Set uniforms
-    mPhongShader.SetMat4("view", view);
-    mPhongShader.SetMat4("projection", proj);
-    mPhongShader.SetMat4("model", model);
-    mPhongShader.SetVec3("viewPos", mCamera.Position);
+    currentShader->SetMat4("view", view);
+    currentShader->SetMat4("projection", proj);
+    currentShader->SetMat4("model", model);
+    currentShader->SetVec3("viewPos", mCamera.Position);
 
     ApplyLighting(mPhongShader);
 
@@ -139,15 +145,15 @@ void test::TestLighting::OnRender()
     mCube_S.Bind(1);
     mCubeVAO.Bind();
     model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0));
-    mPhongShader.SetMat4("model", model);
-    mPhongShader.SetInt("material.diffuseMap", 0);
-    mPhongShader.SetInt("material.specularMap", 1);
+    currentShader->SetMat4("model", model);
+    currentShader->SetInt("material.diffuseMap", 0);
+    currentShader->SetInt("material.specularMap", 1);
 
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0));
-    mPhongShader.SetMat4("model", model);
+    currentShader->SetMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
     // Draw floor
@@ -157,16 +163,15 @@ void test::TestLighting::OnRender()
     model = glm::translate(model, glm::vec3(0.0f, 4.5f, 0.0f));
     model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::scale(model, glm::vec3(10.f));
-    mPhongShader.SetMat4("model", model);
+    currentShader->SetMat4("model", model);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 void test::TestLighting::OnImGuiRender()
 {
-    ImGui::Text("Light calculation method:");
-    int value;
-    ImGui::RadioButton("Phong", &value, 0);
-    ImGui::RadioButton("Blinn-Phong", &value, 1);
+    //ImGui::Text("Light calculation method:");
+    //ImGui::RadioButton("Phong", &mSelectedShader, 0);
+    //ImGui::RadioButton("Blinn-Phong", &mSelectedShader, 1);
     
     ImGui::Text("Lights");
 

@@ -1,1 +1,6 @@
-﻿  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+﻿  main.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(59,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(108,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(109,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(126,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

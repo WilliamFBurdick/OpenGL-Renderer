@@ -20,7 +20,7 @@ namespace test
 		void OnImGuiRender() override;
 
 	private:
-		Shader mPhongShader, mColorShader;
+		Shader mPhongShader, mBlinnPhongShader, mColorShader;
 		Texture mCube_D, mCube_S, mFloor_D;
 		VAO mCubeVAO, mPlaneVAO;
 		VBO mCubeVBO, mPlaneVBO;
@@ -30,6 +30,8 @@ namespace test
 		std::vector<SpotLight> mSpotLights;
 
 		Camera mCamera;
+
+		int mSelectedShader;
 
 		void ApplyLighting(Shader& shader);
     };

@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 	testMenu->RegisterTest<test::TestBlending>("Blending");
 	testMenu->RegisterTest<test::TestPostProcessing>("Post Processing");
 	testMenu->RegisterTest<test::TestCubemap>("Skybox");
-	testMenu->RegisterTest<test::TestShadows>("Shadows");
+	//testMenu->RegisterTest<test::TestShadows>("Shadows");
 
 	while (!glfwWindowShouldClose(window->GetWindow()))
 	{
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 void RenderFPS(Window& window, const float deltaTime)
 {
 	float fps = 1.0f / deltaTime;
-	printf("FPS: %f\n", fps);
+	//printf("FPS: %f\n", fps);
 }
 
 void RenderPropertiesTab(Window& window, test::Test*& test)
