@@ -58,3 +58,16 @@ void Texture::Bind(unsigned int slot)
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, mRendererID);
 }
+
+inline std::string Texture::ToString() const
+{
+	switch (mType)
+	{
+	case TextureType::Diffuse:
+		return "texture_diffuse";
+	case TextureType::Specular:
+		return "texture_specular";
+	default:
+		return "";
+	}
+}

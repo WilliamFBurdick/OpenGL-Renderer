@@ -1,6 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <vector>
+#include <string>
 
 enum class TextureType
 {
@@ -22,6 +23,7 @@ public:
 
 	inline unsigned int GetID() const { return mRendererID; }
 	inline TextureType GetType() const { return mType; }
+	inline std::string ToString() const;
 private:
 	unsigned int mRendererID;
 	TextureType mType;
