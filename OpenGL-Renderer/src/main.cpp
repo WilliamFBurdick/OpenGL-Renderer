@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 	testMenu->RegisterTest<test::TestBlending>("Blending");
 	testMenu->RegisterTest<test::TestPostProcessing>("Post Processing");
 	testMenu->RegisterTest<test::TestCubemap>("Skybox");
-	//testMenu->RegisterTest<test::TestShadows>("Shadows");
+	testMenu->RegisterTest<test::TestShadows>("Shadows");
 
 	while (!glfwWindowShouldClose(window->GetWindow()))
 	{

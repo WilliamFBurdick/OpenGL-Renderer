@@ -138,7 +138,7 @@ void test::TestLighting::OnRender()
     currentShader->SetMat4("model", model);
     currentShader->SetVec3("viewPos", mCamera.Position);
 
-    ApplyLighting(mPhongShader);
+    ApplyLighting(*currentShader);
 
     // Draw cubes
     mCube_D.Bind(0);

@@ -1,6 +1,6 @@
 #pragma once
 #include "Test.h"
-#include "Texture/Texture.h"
+#include "Model/Mesh.h"
 #include "Shader/Shader.h"
 #include "VertexArray/VAO.h"
 #include "Camera/Camera.h"

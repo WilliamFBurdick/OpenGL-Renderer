@@ -6,6 +6,8 @@ D:\Repos\OpenGL-Renderer\includes\imgui\imgui_impl_opengl3.cpp;D:\Repos\OpenGL-R
 D:\Repos\OpenGL-Renderer\includes\imgui\imgui_tables.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_tables.obj
 D:\Repos\OpenGL-Renderer\includes\imgui\imgui_widgets.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_widgets.obj
 D:\Repos\OpenGL-Renderer\libs\glad.c;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\glad.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Model\Mesh.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Mesh.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Model\Model.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Model.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\VertexArray\Buffers\EBO.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\EBO.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Input\Input.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Input.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Camera\Camera.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Camera.obj
@@ -13,7 +15,6 @@ D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\Test.cpp;D:\Repos\OpenGL-Rend
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Shader\Shader.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Shader.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\main.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestCubemap.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\TestCubemap.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Texture\Texture.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Texture.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\VertexArray\VAO.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\VAO.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Window\Window.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Window.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestBlending.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\TestBlending.obj

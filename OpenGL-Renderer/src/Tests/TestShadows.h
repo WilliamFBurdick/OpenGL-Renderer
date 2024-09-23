@@ -4,7 +4,7 @@
 #include "VertexArray/VAO.h"
 #include "Lights/Lights.h"
 #include "Shader/Shader.h"
-#include "Texture/Texture.h"
+#include "Model/Mesh.h"
 
 namespace test
 {
@@ -29,9 +29,11 @@ namespace test
         Shader mSimpleDepth, mObjectShader, mDebugQuad;
         Texture mWood;
 
-        unsigned int mShadowMapFBO;
+        unsigned int mDepthMapFBO;
         unsigned int mShadowWidth, mShadowHeight;
         unsigned int mDepthMap;
+
+        glm::vec3 mLightPos;
 
         unsigned int GenerateShadowmap(int width, int height);
         void RenderScene(const Shader& shader);

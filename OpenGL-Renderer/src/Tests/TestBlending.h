@@ -2,8 +2,8 @@
 #include "Test.h"
 #include "Camera/Camera.h"
 #include "Shader/Shader.h"
-#include "Texture/Texture.h"
 #include "VertexArray/VAO.h"
+#include "Model/Mesh.h"
 
 namespace test
 {

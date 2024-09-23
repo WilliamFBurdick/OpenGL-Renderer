@@ -3,9 +3,9 @@
 
 #include "VertexArray/VAO.h"
 #include "Shader/Shader.h"
-#include "Texture/Texture.h"
 #include "Camera/Camera.h"
 #include "Lights/Lights.h"
+#include "Model/Mesh.h"
 
 namespace test
 {

@@ -1,9 +1,9 @@
 #pragma once
 #include "Test.h"
 #include "VertexArray/VAO.h"
-#include "Texture/Texture.h"
 #include "Shader/Shader.h"
 #include "Camera/Camera.h"
+#include "Model/Mesh.h"
 
 namespace test
 {
