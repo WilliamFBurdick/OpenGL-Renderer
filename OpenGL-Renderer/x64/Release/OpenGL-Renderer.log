@@ -1,9 +1,13 @@
-﻿  TestShadows.cpp
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestShadows.cpp(89,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\Tests\TestShadows.cpp(89,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  EBO.cpp
+  Shader.cpp
+  main.cpp
+  stb_image.cpp
+  VAO.cpp
+  VBO.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\VAO.cpp(11,63): warning C4244: 'argument': conversion from 'GLsizeiptr' to 'GLsizei', possible loss of data
   Generating code
-  1 of 2737 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    53 functions had inline decision re-evaluated but remain unchanged
+  183 of 185 functions (98.9%) were compiled, the rest were copied from previous compilation.
+    141 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Release\OpenGL-Renderer.exe
