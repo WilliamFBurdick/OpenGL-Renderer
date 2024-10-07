@@ -18,7 +18,7 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vec
 	ebo.Unbind();
 }
 
-void Mesh::Draw(Shader& shader)
+void Mesh::Draw(Shader& shader, Camera& camera)
 {
 	shader.Use();
 	vao.Bind();
@@ -40,4 +40,9 @@ void Mesh::Draw(Shader& shader)
 		textures[i].TexUnit(shader, (type + num).c_str(), i);
 		textures[i].Bind();
 	}
+
+	glUniform3f(glGetUniformLocation(shader.ID, "cameraPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "view_matrix"), 1, GL_FALSE, glm::value_ptr<glm::mat4>(camera.GetViewMatrix()));
+
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
