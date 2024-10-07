@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const char* path, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
+Texture::Texture(const char* path, const char* texType, GLenum slot, GLenum format, GLenum pixelType)
 {
 	type = texType;
 	int width, height, numChannels;
@@ -9,16 +9,16 @@ Texture::Texture(const char* path, GLenum texType, GLenum slot, GLenum format, G
 
 	glGenTextures(1, &ID);
 	glActiveTexture(slot);
-	glBindTexture(texType, ID);
+	glBindTexture(GL_TEXTURE_2D, ID);
 
-	glTexParameteri(texType, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(texType, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(texType, 0, GL_RGBA, width, height, 0, format, pixelType, data);
-	glGenerateMipmap(texType);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, pixelType, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
 
 	stbi_image_free(data);
-	glBindTexture(texType, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Texture::TexUnit(Shader& shader, const char* uniform, GLuint unit)
@@ -31,12 +31,12 @@ void Texture::TexUnit(Shader& shader, const char* uniform, GLuint unit)
 void Texture::Bind(unsigned int slot = 0)
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(type, ID);
+	glBindTexture(GL_TEXTURE_2D, ID);
 }
 
 void Texture::Unbind()
 {
-	glBindTexture(type, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Texture::Delete()
