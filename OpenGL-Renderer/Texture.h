@@ -9,7 +9,7 @@ class Texture
 public:
 	GLuint ID;
 	const char* type;
-	Texture(const char* path, const char* texType, GLenum slot, GLenum format, GLenum pixelType);
+	Texture(const char* path, const char* texType, GLenum slot);
 
 	void TexUnit(Shader& shader, const char* uniform, GLuint unit);
 	void Bind(unsigned int slot = 0);

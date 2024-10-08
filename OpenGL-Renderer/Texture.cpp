@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const char* path, const char* texType, GLenum slot, GLenum format, GLenum pixelType)
+Texture::Texture(const char* path, const char* texType, GLenum slot)
 {
 	type = texType;
 	int width, height, numChannels;
@@ -14,7 +14,23 @@ Texture::Texture(const char* path, const char* texType, GLenum slot, GLenum form
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, pixelType, data);
+	GLenum type;
+	switch (numChannels)
+	{
+	case 4:
+		type = GL_RGBA;
+		break;
+	case 3:
+		type = GL_RGB;
+		break;
+	case 1:
+		type = GL_RED;
+		break;
+	default:
+		type = GL_RGB;
+		break;
+	}
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, type, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	stbi_image_free(data);
