@@ -1,10 +1,7 @@
 D:\Repos\OpenGL-Renderer\libs\glad.c;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\glad.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\Camera.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Camera.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\EBO.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\EBO.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\main.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\main.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\Mesh.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Mesh.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\Shader.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Shader.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\stb_image.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\stb_image.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\Texture.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Texture.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\VAO.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\VAO.obj
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\VBO.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\VBO.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\model\Mesh.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Mesh.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\model\Model.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Model.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\camera\Camera.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Camera.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\shader\Shader.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Shader.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\main.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\stb_image.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\stb_image.obj

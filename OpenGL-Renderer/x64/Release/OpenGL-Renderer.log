@@ -1,5 +1,6 @@
-﻿  Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 187 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+﻿  stb_image.cpp
+  Generating code
+  Compiler switch has changed, fall back to full compilation.
+  All 690 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Release\OpenGL-Renderer.exe
