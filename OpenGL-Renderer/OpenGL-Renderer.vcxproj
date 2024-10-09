@@ -34,6 +34,11 @@
     <ClInclude Include="src\camera\Camera.h" />
     <ClInclude Include="src\shader\Shader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assimp-vc143-mt.dll" />
+    <None Include="Draco.dll" />
+    <None Include="glfw3.dll" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
