@@ -1,7 +1,7 @@
-﻿  Model.cpp
+﻿  main.cpp
   Generating code
-  0 of 691 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  326 of 2285 functions (14.3%) were compiled, the rest were copied from previous compilation.
+    20 functions were new in current compilation
+    120 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Release\OpenGL-Renderer.exe

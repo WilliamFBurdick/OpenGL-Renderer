@@ -1,4 +1,12 @@
 D:\Repos\OpenGL-Renderer\libs\glad.c;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\glad.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_demo.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_demo.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_draw.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_draw.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_impl_glfw.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_impl_glfw.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_impl_opengl3.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_impl_opengl3.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_tables.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_tables.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_widgets.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_widgets.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\Scene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Scene.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\model\Mesh.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Mesh.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\model\Model.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Model.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\camera\Camera.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Camera.obj
