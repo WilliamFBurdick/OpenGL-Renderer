@@ -3,22 +3,25 @@
 #include <glm/glm.hpp>
 #include <cstdio>
 
+#include "input/Input.h"
 #include "camera/Camera.h"
 #include "model/Model.h"
 #include "shader/Shader.h"
+#include "scene/Scene.h"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow* window);
+
+void renderProperties(GLFWwindow* window, Scene*& scene);
+void renderSceneSelection(GLFWwindow* window, SceneMenu*& sceneMenu);
 
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
+const unsigned int PANEL_WIDTH = 150;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -47,11 +50,6 @@ int main(void)
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);
-
-	// hide cursor
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// load all OpenGL function pointers using GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -69,10 +67,10 @@ int main(void)
 	// CONFIGURE GLOBAL OPENGL STATE
 	glEnable(GL_DEPTH_TEST);
 
-	// BUILD AND COMPILE SHADERS
-	
-	// LOAD MODELS
-	Model myModel("res/models/backpack/backpack.obj");
+	// LOAD SCENES
+	Scene* currentScene;
+	SceneMenu* sceneMenu = new SceneMenu(window, currentScene);
+	currentScene = sceneMenu;
 
 
 	// RENDER LOOP
@@ -84,19 +82,28 @@ int main(void)
 		lastFrame = currentFrame;
 
 		// input
-		processInput(window);
+		Input::ProcessInput(window);
+		if (Input::GetKey(window, GLFW_KEY_ESCAPE))
+		{
+			glfwSetWindowShouldClose(window, true);
+		}
 
 		// rendering
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGui::Begin("Setters");
-		float v;
-		ImGui::SliderFloat("Float", &v, 0.0f, 1.0f, "%.2f");
-		ImGui::End();
+
+		if (currentScene)
+		{
+			currentScene->Update(deltaTime);
+			currentScene->Render();
+
+			renderProperties(window, currentScene);
+			renderSceneSelection(window, sceneMenu);
+		}
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -118,43 +125,38 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window)
+void renderProperties(GLFWwindow* window, Scene*& scene)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	ImGui::Begin("Properties", nullptr,
+		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoMove);
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+	int w, h;
+	glfwGetFramebufferSize(window, &w, &h);
+
+	ImVec2 panelPos = ImVec2(w - PANEL_WIDTH, 0);
+	ImVec2 panelSize = ImVec2(PANEL_WIDTH, h);
+
+	ImGui::SetWindowPos(panelPos);
+	ImGui::SetWindowSize(panelSize);
+
+	scene->RenderUI();
+	ImGui::End();
 }
 
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+void renderSceneSelection(GLFWwindow* window, SceneMenu*& sceneMenu)
 {
-	float xpos = static_cast<float>(xposIn);
-	float ypos = static_cast<float>(yposIn);
+	ImGui::Begin("Scene Selection", nullptr,
+		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoMove);
 
-	if (firstMouse)
-	{
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
+	int w, h;
+	glfwGetFramebufferSize(window, &w, &h);
 
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;
+	ImVec2 panelPos = ImVec2(0, 0);
+	ImVec2 panelSize = ImVec2(PANEL_WIDTH, h);
 
-	lastX = xpos;
-	lastY = ypos;
+	ImGui::SetWindowPos(panelPos);
+	ImGui::SetWindowSize(panelSize);
 
-	camera.ProcessMouseMovement(xoffset, yoffset);
-}
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-	camera.ProcessMouseScroll(static_cast<float>(yoffset));
+	sceneMenu->RenderUI();
+	ImGui::End();
 }
