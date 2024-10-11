@@ -33,6 +33,7 @@ private:
 	// Scene Objects
 	unsigned int m_CubeVAO;
 	unsigned int m_CubeVBO;
+	unsigned int m_LightVAO;
 	std::vector<glm::vec3> m_CubePositions;
 	// Textures
 	unsigned int m_DiffuseMap;

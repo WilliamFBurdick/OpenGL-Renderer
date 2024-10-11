@@ -71,6 +71,10 @@
     <None Include="shaders\unlit\color.frag" />
     <None Include="shaders\unlit\color.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\container2.png" />
+    <Image Include="res\textures\container2_specular.png" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

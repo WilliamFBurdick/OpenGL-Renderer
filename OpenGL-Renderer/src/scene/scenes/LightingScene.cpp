@@ -89,6 +89,14 @@ LightingScene::LightingScene(Window* window):
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
+
+	// Set up light Array
+	glGenVertexArrays(1, &m_LightVAO);
+	glBindVertexArray(m_LightVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_CubeVBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
 	// Set up textures
 	m_DiffuseMap = Utils::LoadTexture("res/textures/container2.png");
 	m_SpecularMap = Utils::LoadTexture("res/textures/container2_specular.png");
@@ -127,7 +135,7 @@ void LightingScene::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	SetupLights();
-	Shader* shader = (m_CurrentShader == 0) ? m_PhongShader : m_BlinnPhongShader;
+	Shader*& shader = (m_CurrentShader == 0) ? m_PhongShader : m_BlinnPhongShader;
 	shader->use();
 	shader->setVec3("viewPos", m_Camera.Position);
 	shader->setFloat("material.shininess", 32.0f);
@@ -160,9 +168,11 @@ void LightingScene::Render()
 		m_LightShader->use();
 		m_LightShader->setMat4("view", view);
 		m_LightShader->setMat4("projection", proj);
+		// Bind light VAO
+		glBindVertexArray(m_LightVAO);
 		// Draw point light
 		model = glm::translate(glm::mat4(1.0f), m_PointLight.position);
-		model = glm::scale(model, glm::vec3(0.4f));
+		model = glm::scale(model, glm::vec3(0.2f));
 		m_LightShader->setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
