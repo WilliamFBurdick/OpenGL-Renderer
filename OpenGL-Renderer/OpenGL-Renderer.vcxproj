@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\scene\scenes\LightingScene.cpp" />
     <ClCompile Include="src\input\Input.cpp" />
     <ClCompile Include="src\imgui\imgui.cpp" />
     <ClCompile Include="src\imgui\imgui_demo.cpp" />
@@ -38,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\lights\Lights.h" />
+    <ClInclude Include="src\scene\scenes\LightingScene.h" />
     <ClInclude Include="src\input\Input.h" />
     <ClInclude Include="src\imgui\imconfig.h" />
     <ClInclude Include="src\imgui\imgui.h" />
@@ -58,6 +61,10 @@
     <None Include="assimp-vc143-mt.dll" />
     <None Include="Draco.dll" />
     <None Include="glfw3.dll" />
+    <None Include="shaders\lit\blinn_phong.frag" />
+    <None Include="shaders\lit\blinn_phong.vert" />
+    <None Include="shaders\lit\phong.frag" />
+    <None Include="shaders\lit\phong.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

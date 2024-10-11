@@ -1,4 +1,6 @@
 D:\Repos\OpenGL-Renderer\libs\glad.c;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\glad.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\LightingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\LightingScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\input\Input.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Input.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_demo.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_demo.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui_draw.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui_draw.obj

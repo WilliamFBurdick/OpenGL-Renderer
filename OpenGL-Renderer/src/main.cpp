@@ -13,6 +13,8 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
+#include "scene/scenes/LightingScene.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 void renderProperties(GLFWwindow* window, Scene*& scene);
@@ -72,6 +74,8 @@ int main(void)
 	SceneMenu* sceneMenu = new SceneMenu(window, currentScene);
 	currentScene = sceneMenu;
 
+	sceneMenu->RegisterScene<LightingScene>("Lighting");
+
 
 	// RENDER LOOP
 	while (!glfwWindowShouldClose(window))
@@ -89,8 +93,6 @@ int main(void)
 		}
 
 		// rendering
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
