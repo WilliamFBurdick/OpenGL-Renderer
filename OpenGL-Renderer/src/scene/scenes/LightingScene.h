@@ -9,7 +9,7 @@
 class LightingScene : public Scene
 {
 public:
-	LightingScene(GLFWwindow* window);
+	LightingScene(Window* window);
 	void Update(float dt) override;
 	void Render() override;
 	void RenderUI() override;
@@ -21,6 +21,7 @@ private:
 	Camera m_Camera;
 	Shader* m_PhongShader;
 	Shader* m_BlinnPhongShader;
+	Shader* m_LightShader;
 	bool m_DrawLights;
 
 	DirectionalLight m_DirLight;
@@ -28,5 +29,13 @@ private:
 	SpotLight m_SpotLight;
 
 	int m_CurrentShader = 0;
+
+	// Scene Objects
+	unsigned int m_CubeVAO;
+	unsigned int m_CubeVBO;
+	std::vector<glm::vec3> m_CubePositions;
+	// Textures
+	unsigned int m_DiffuseMap;
+	unsigned int m_SpecularMap;
 };
 

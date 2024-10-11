@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <cstdio>
 
+#include "window/Window.h"
 #include "input/Input.h"
 #include "camera/Camera.h"
 #include "model/Model.h"
@@ -37,32 +38,12 @@ float lastFrame = 0.0f;
 
 int main(void)
 {
-	// initialize GLFW
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// create GLFW window
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL Renderer", NULL, NULL);
-	if (window == NULL)
-	{
-		printf("Failed to create GLFW window\n");
-		glfwTerminate();
-		return -1;
-	}
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-	// load all OpenGL function pointers using GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		printf("Failed to initialize GLAD\n");
-		return -1;
-	}
+	// create window
+	Window window("OpenGL Renderer", 1280, 720);
 
 	// configure imgui
 	ImGui::CreateContext();
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(window.GetWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 430");
 	ImGui::StyleColorsDark();
 
@@ -71,14 +52,14 @@ int main(void)
 
 	// LOAD SCENES
 	Scene* currentScene;
-	SceneMenu* sceneMenu = new SceneMenu(window, currentScene);
+	SceneMenu* sceneMenu = new SceneMenu(&window, currentScene);
 	currentScene = sceneMenu;
 
 	sceneMenu->RegisterScene<LightingScene>("Lighting");
 
 
 	// RENDER LOOP
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window.GetWindow()))
 	{
 		// timing
 		float currentFrame = static_cast<float>(glfwGetTime());
@@ -86,10 +67,10 @@ int main(void)
 		lastFrame = currentFrame;
 
 		// input
-		Input::ProcessInput(window);
-		if (Input::GetKey(window, GLFW_KEY_ESCAPE))
+		Input::ProcessInput(window.GetWindow());
+		if (Input::GetKey(window.GetWindow(), GLFW_KEY_ESCAPE))
 		{
-			glfwSetWindowShouldClose(window, true);
+			glfwSetWindowShouldClose(window.GetWindow(), true);
 		}
 
 		// rendering
@@ -102,15 +83,15 @@ int main(void)
 			currentScene->Update(deltaTime);
 			currentScene->Render();
 
-			renderProperties(window, currentScene);
-			renderSceneSelection(window, sceneMenu);
+			renderProperties(window.GetWindow(), currentScene);
+			renderSceneSelection(window.GetWindow(), sceneMenu);
 		}
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// check and call events and swap buffers
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(window.GetWindow());
 		glfwPollEvents();
 	}
 

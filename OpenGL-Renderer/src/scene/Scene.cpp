@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include <imgui/imgui.h>
 
-SceneMenu::SceneMenu(GLFWwindow* window, Scene*& currentScene) :
+SceneMenu::SceneMenu(Window* window, Scene*& currentScene) :
 	Scene(window), m_CurrentScene(currentScene)
 {
 

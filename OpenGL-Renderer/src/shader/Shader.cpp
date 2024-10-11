@@ -27,7 +27,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	}
 	catch (std::ifstream::failure e)
 	{
-		printf("ERROR::SHADER::FILE NOT READ\n");
+		printf("SHADER ERROR : Could not read shader file.\n");
 	}
 	const char* vShaderCode = vertexCode.c_str();
 	const char* fShaderCode = fragmentCode.c_str();
@@ -46,7 +46,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-		printf("ERROR::SHADER::VERTEX::COMPILATION FAILED\n%s", infoLog);
+		printf("SHADER ERROR : Vertex Shader\Could not compile: %s\n%s", vertexPath, infoLog);
 	}
 	// fragment
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
@@ -57,7 +57,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-		printf("ERROR::SHADER::FRAGMENT::COMPILATION FAILED\n%s", infoLog);
+		printf("SHADER ERROR : Fragment Shader\nCould not compile: %s\n%s", fragmentPath, infoLog);
 	}
 
 	// link shader program
@@ -70,7 +70,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	if (!success)
 	{
 		glGetProgramInfoLog(ID, 512, NULL, infoLog);
-		printf("ERROR::SHADER::PROGRAM::LINKING FAILED\n%s", infoLog);
+		printf("SHADER ERROR : Shader Program\nFailed to link shader program\n%s", infoLog);
 	}
 
 	// delete shaders, as they're no longer needed after being linked

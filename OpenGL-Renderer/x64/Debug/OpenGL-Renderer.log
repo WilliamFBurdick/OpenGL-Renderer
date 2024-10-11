@@ -1,5 +1,4 @@
-﻿  main.cpp
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(136,29): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(137,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(155,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  LightingScene.cpp
+glad.obj : warning LNK4099: PDB '' was not found with 'glad.obj' or at ''; linking object as if no debug info
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
