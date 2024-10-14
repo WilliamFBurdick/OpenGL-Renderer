@@ -6,6 +6,11 @@
 LightingScene::LightingScene(Window* window):
 	Scene(window)
 {
+
+}
+
+void LightingScene::Enter()
+{
 	m_Camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 	m_PhongShader = new Shader("shaders/lit/phong.vert", "shaders/lit/phong.frag");
@@ -73,15 +78,15 @@ LightingScene::LightingScene(Window* window):
 		glm::vec3(1.5f,  0.2f, -1.5f),
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
-	
+
 	// Set up Arrays/Buffers
 	glGenVertexArrays(1, &m_CubeVAO);
 	glGenBuffers(1, &m_CubeVBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_CubeVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
-
 	glBindVertexArray(m_CubeVAO);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -101,13 +106,22 @@ LightingScene::LightingScene(Window* window):
 	m_DiffuseMap = Utils::LoadTexture("res/textures/container2.png");
 	m_SpecularMap = Utils::LoadTexture("res/textures/container2_specular.png");
 
+	m_PhongShader->use();
 	m_PhongShader->setInt("material.diffuse", 0);
 	m_PhongShader->setInt("material.specular", 1);
 
+	m_BlinnPhongShader->use();
 	m_BlinnPhongShader->setInt("material.diffuse", 0);
 	m_BlinnPhongShader->setInt("material.specular", 1);
 
 	SetupLights();
+}
+
+void LightingScene::Exit()
+{
+	glDeleteBuffers(1, &m_CubeVBO);
+	glDeleteVertexArrays(1, &m_CubeVAO);
+	glDeleteVertexArrays(1, &m_LightVAO);
 }
 
 void LightingScene::Update(float dt)
@@ -117,13 +131,13 @@ void LightingScene::Update(float dt)
 		Input::SetCursorVisible(m_Window->GetWindow(), false);
 		m_Camera.ProcessMouseMovement(Input::GetMouse().xDelta, Input::GetMouse().yDelta);
 		if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_W) == GLFW_PRESS)
-			m_Camera.ProcessKeyboard(FORWARD, dt);
+			m_Camera.ProcessKeyboard(EForward, dt);
 		if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_S) == GLFW_PRESS)
-			m_Camera.ProcessKeyboard(BACKWARD, dt);
+			m_Camera.ProcessKeyboard(EBackward, dt);
 		if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_A) == GLFW_PRESS)
-			m_Camera.ProcessKeyboard(LEFT, dt);
+			m_Camera.ProcessKeyboard(ELeft, dt);
 		if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_D) == GLFW_PRESS)
-			m_Camera.ProcessKeyboard(RIGHT, dt);
+			m_Camera.ProcessKeyboard(ERight, dt);
 	}
 	else
 	{
@@ -134,8 +148,9 @@ void LightingScene::Update(float dt)
 void LightingScene::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+
 	SetupLights();
-	Shader*& shader = (m_CurrentShader == 0) ? m_PhongShader : m_BlinnPhongShader;
+	Shader* shader = (m_CurrentShader == 0) ? m_PhongShader : m_BlinnPhongShader;
 	shader->use();
 	shader->setVec3("viewPos", m_Camera.Position);
 	shader->setFloat("material.shininess", 32.0f);
@@ -143,13 +158,20 @@ void LightingScene::Render()
 
 	// set up view/projection matrices
 	glm::mat4 view = m_Camera.GetViewMatrix();
-	glm::mat4 proj = glm::perspective(m_Camera.Zoom, (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 1000.0f);
+	glm::mat4 proj = glm::perspective(m_Camera.Zoom, (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 100.0f);
+
+	// set up textures
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_SpecularMap);
 
 	shader->setMat4("view", view);
 	shader->setMat4("projection", proj);
 
 	// draw scene objects
 	glBindVertexArray(m_CubeVAO);
+	glCheckError();
 	glm::mat4 model = glm::mat4(1.0f);
 	unsigned int i = 0;
 	for (glm::vec3 position : m_CubePositions)
@@ -166,6 +188,7 @@ void LightingScene::Render()
 	{
 		// Bind shader
 		m_LightShader->use();
+		m_LightShader->setVec4("color", glm::vec4(1.0f));
 		m_LightShader->setMat4("view", view);
 		m_LightShader->setMat4("projection", proj);
 		// Bind light VAO

@@ -21,11 +21,21 @@ Window::Window(const char* title, unsigned int width, unsigned int height):
 	glfwMakeContextCurrent(m_Window);
 	glfwSetFramebufferSizeCallback(m_Window, Window::resize_window_callback);
 	glfwSetWindowUserPointer(m_Window, this);
+	glfwSwapInterval(1);
 
 	// load all OpenGL function pointers using GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		throw std::runtime_error("Failed to initialize GLAD.");
+	}
+
+	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	{
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(Utils::glDebugOutput, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 }
 

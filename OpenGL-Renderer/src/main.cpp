@@ -15,11 +15,12 @@
 #include <imgui/imgui_impl_opengl3.h>
 
 #include "scene/scenes/LightingScene.h"
+#include "scene/scenes/InstancingScene.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-void renderProperties(GLFWwindow* window, Scene*& scene);
-void renderSceneSelection(GLFWwindow* window, SceneMenu*& sceneMenu);
+void renderProperties(Window* window, Scene* scene);
+void renderSceneSelection(Window* window, SceneManager& sceneManager);
 
 // settings
 const unsigned int SCR_WIDTH = 1280;
@@ -51,11 +52,7 @@ int main(void)
 	glEnable(GL_DEPTH_TEST);
 
 	// LOAD SCENES
-	Scene* currentScene;
-	SceneMenu* sceneMenu = new SceneMenu(&window, currentScene);
-	currentScene = sceneMenu;
-
-	sceneMenu->RegisterScene<LightingScene>("Lighting");
+	SceneManager sceneManager(new LightingScene(&window));
 
 
 	// RENDER LOOP
@@ -65,6 +62,8 @@ int main(void)
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 		// input
 		Input::ProcessInput(window.GetWindow());
@@ -78,13 +77,13 @@ int main(void)
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		if (currentScene)
+		if (sceneManager.GetCurrentScene())
 		{
-			currentScene->Update(deltaTime);
-			currentScene->Render();
+			sceneManager.GetCurrentScene()->Update(deltaTime);
+			sceneManager.GetCurrentScene()->Render();
 
-			renderProperties(window.GetWindow(), currentScene);
-			renderSceneSelection(window.GetWindow(), sceneMenu);
+			renderProperties(&window, sceneManager.GetCurrentScene());
+			renderSceneSelection(&window, sceneManager);
 		}
 
 		ImGui::Render();
@@ -108,16 +107,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void renderProperties(GLFWwindow* window, Scene*& scene)
+void renderProperties(Window* window, Scene* scene)
 {
 	ImGui::Begin("Properties", nullptr,
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoMove);
 
-	int w, h;
-	glfwGetFramebufferSize(window, &w, &h);
-
-	ImVec2 panelPos = ImVec2(w - PANEL_WIDTH, 0);
-	ImVec2 panelSize = ImVec2(PANEL_WIDTH, h);
+	ImVec2 panelPos = ImVec2(window->GetWidth() - PANEL_WIDTH, 0);
+	ImVec2 panelSize = ImVec2(PANEL_WIDTH, window->GetHeight());
 
 	ImGui::SetWindowPos(panelPos);
 	ImGui::SetWindowSize(panelSize);
@@ -126,20 +122,22 @@ void renderProperties(GLFWwindow* window, Scene*& scene)
 	ImGui::End();
 }
 
-void renderSceneSelection(GLFWwindow* window, SceneMenu*& sceneMenu)
+void renderSceneSelection(Window* window, SceneManager& sceneManager)
 {
 	ImGui::Begin("Scene Selection", nullptr,
 		ImGuiWindowFlags_::ImGuiWindowFlags_NoResize | ImGuiWindowFlags_::ImGuiWindowFlags_NoMove);
 
-	int w, h;
-	glfwGetFramebufferSize(window, &w, &h);
-
 	ImVec2 panelPos = ImVec2(0, 0);
-	ImVec2 panelSize = ImVec2(PANEL_WIDTH, h);
+	ImVec2 panelSize = ImVec2(PANEL_WIDTH, window->GetHeight());
 
 	ImGui::SetWindowPos(panelPos);
 	ImGui::SetWindowSize(panelSize);
 
-	sceneMenu->RenderUI();
+	// Render Scene Selection
+	if (ImGui::Button("Lighting"))
+		sceneManager.ChangeScene(new LightingScene(window));
+	if (ImGui::Button("Instancing"))
+		sceneManager.ChangeScene(new InstancingScene(window));
+
 	ImGui::End();
 }

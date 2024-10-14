@@ -15,25 +15,20 @@ public:
 	virtual void Update(float dt) {}
 	virtual void Render() {}
 	virtual void RenderUI() {}
+
+	virtual void Enter() {}
+	virtual void Exit() {}
 protected:
 	Window* m_Window;
 };
 
-class SceneMenu : public Scene
+class SceneManager
 {
 public:
-	SceneMenu(Window* window, Scene*& currentScene);
+	SceneManager(Scene* currentScene);
 
-	void RenderUI() override;
-	void Render() override;
-
-	template <typename T>
-	void RegisterScene(const std::string& name)
-	{
-		printf("Registering scene: %s\n", name.c_str());
-		m_Scenes.push_back(std::make_pair(name, [](Window* window) {return new T(window); }));
-	}
+	void ChangeScene(Scene* newScene);
+	inline Scene* GetCurrentScene() const { return m_CurrentScene; }
 private:
-	Scene*& m_CurrentScene;
-	std::vector<std::pair<std::string, std::function<Scene*(Window*)>>> m_Scenes;
+	Scene* m_CurrentScene;
 };

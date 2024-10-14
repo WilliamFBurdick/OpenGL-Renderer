@@ -13,6 +13,8 @@ public:
 	void Update(float dt) override;
 	void Render() override;
 	void RenderUI() override;
+	void Enter() override;
+	void Exit() override;
 private:
 	// Helper methods
 	void SetupLights();

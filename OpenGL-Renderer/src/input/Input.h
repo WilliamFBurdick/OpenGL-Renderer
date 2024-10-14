@@ -7,6 +7,7 @@ struct Mouse
 {
 	float xPos, yPos;
 	float xDelta, yDelta;
+	bool firstMouse;
 };
 
 class Input

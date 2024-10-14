@@ -1,11 +1,18 @@
 #include "Input.h"
 
-Mouse Input::m_Mouse;
+Mouse Input::m_Mouse = {0.0f, 0.0f, 0.0f, 0.0f, true};
 
 void Input::ProcessInput(GLFWwindow* window)
 {
 	double xPos, yPos;
 	glfwGetCursorPos(window, &xPos, &yPos);
+
+	if (m_Mouse.firstMouse)
+	{
+		m_Mouse.xPos = xPos;
+		m_Mouse.yPos = yPos;
+		m_Mouse.firstMouse = false;
+	}
 
 	m_Mouse.xDelta = (float)xPos - m_Mouse.xPos;
 	m_Mouse.yDelta = (float)yPos - m_Mouse.yPos;
