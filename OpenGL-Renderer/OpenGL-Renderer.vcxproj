@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\scene\scenes\AlphaBlendingScene.cpp" />
     <ClCompile Include="src\scene\scenes\PostProcessingScene.cpp" />
     <ClCompile Include="src\scene\scenes\InstancingScene.cpp" />
     <ClCompile Include="src\scene\scenes\LightingScene.cpp" />
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\scene\scenes\AlphaBlendingScene.h" />
     <ClInclude Include="src\scene\scenes\PostProcessingScene.h" />
     <ClInclude Include="src\scene\scenes\InstancingScene.h" />
     <ClInclude Include="src\lights\Lights.h" />

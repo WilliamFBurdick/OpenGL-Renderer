@@ -17,6 +17,7 @@
 #include "scene/scenes/LightingScene.h"
 #include "scene/scenes/InstancingScene.h"
 #include "scene/scenes/PostProcessingScene.h"
+#include "scene/scenes/AlphaBlendingScene.h"
 
 void renderProperties(Window* window, Scene* scene);
 void renderSceneSelection(Window* window, SceneManager& sceneManager);
@@ -24,7 +25,7 @@ void renderSceneSelection(Window* window, SceneManager& sceneManager);
 // settings
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
-const unsigned int PANEL_WIDTH = 150;
+const unsigned int PANEL_WIDTH = 250;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -127,6 +128,7 @@ void renderSceneSelection(Window* window, SceneManager& sceneManager)
 	ImGui::SetWindowPos(panelPos);
 	ImGui::SetWindowSize(panelSize);
 
+	ImGui::Text("Select a scene to view:");
 	// Render Scene Selection
 	if (ImGui::Button("Lighting"))
 		sceneManager.ChangeScene(new LightingScene(window));
@@ -134,6 +136,8 @@ void renderSceneSelection(Window* window, SceneManager& sceneManager)
 		sceneManager.ChangeScene(new InstancingScene(window));
 	if (ImGui::Button("Post Processing"))
 		sceneManager.ChangeScene(new PostProcessingScene(window));
+	if (ImGui::Button("Alpha Blending"))
+		sceneManager.ChangeScene(new AlphaBlendingScene(window));
 
 	ImGui::End();
 }
