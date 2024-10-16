@@ -54,5 +54,6 @@ void Window::resize_window_callback(GLFWwindow* window, int width, int height)
 	if (myWindow)
 	{
 		myWindow->SetDimensions(width, height);
+		glViewport(0, 0, myWindow->GetWidth(), myWindow->GetHeight());
 	}
 }

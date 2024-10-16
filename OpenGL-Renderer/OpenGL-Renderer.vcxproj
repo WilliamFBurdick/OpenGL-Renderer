@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\scene\scenes\PostProcessingScene.cpp" />
     <ClCompile Include="src\scene\scenes\InstancingScene.cpp" />
     <ClCompile Include="src\scene\scenes\LightingScene.cpp" />
     <ClCompile Include="src\input\Input.cpp" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\scene\scenes\PostProcessingScene.h" />
     <ClInclude Include="src\scene\scenes\InstancingScene.h" />
     <ClInclude Include="src\lights\Lights.h" />
     <ClInclude Include="src\scene\scenes\LightingScene.h" />
@@ -66,12 +68,20 @@
     <None Include="assimp-vc143-mt.dll" />
     <None Include="Draco.dll" />
     <None Include="glfw3.dll" />
+    <None Include="shaders\instancing\instanced.frag" />
+    <None Include="shaders\instancing\instanced.vert" />
+    <None Include="shaders\instancing\not-instanced.frag" />
+    <None Include="shaders\instancing\not-instanced.vert" />
     <None Include="shaders\lit\blinn_phong.frag" />
     <None Include="shaders\lit\blinn_phong.vert" />
     <None Include="shaders\lit\phong.frag" />
     <None Include="shaders\lit\phong.vert" />
+    <None Include="shaders\post-processing\post-processing.frag" />
+    <None Include="shaders\post-processing\post-processing.vert" />
     <None Include="shaders\unlit\color.frag" />
     <None Include="shaders\unlit\color.vert" />
+    <None Include="shaders\unlit\unlit.frag" />
+    <None Include="shaders\unlit\unlit.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\container2.png" />

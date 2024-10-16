@@ -13,10 +13,10 @@ class Model
 public:
 	Model(const char* path) { loadModel(path); }
 	void Draw(Shader& shader);
-private:
 	vector<Mesh> meshes;
-	string directory;
 	vector<Texture> textures_loaded;
+private:
+	string directory;
 
 	void loadModel(string path);
 	void processNode(aiNode* node, const aiScene* scene);

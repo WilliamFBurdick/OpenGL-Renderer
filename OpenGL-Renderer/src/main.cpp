@@ -16,8 +16,7 @@
 
 #include "scene/scenes/LightingScene.h"
 #include "scene/scenes/InstancingScene.h"
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+#include "scene/scenes/PostProcessingScene.h"
 
 void renderProperties(Window* window, Scene* scene);
 void renderSceneSelection(Window* window, SceneManager& sceneManager);
@@ -102,11 +101,6 @@ int main(void)
 	return 0;
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
-}
-
 void renderProperties(Window* window, Scene* scene)
 {
 	ImGui::Begin("Properties", nullptr,
@@ -138,6 +132,8 @@ void renderSceneSelection(Window* window, SceneManager& sceneManager)
 		sceneManager.ChangeScene(new LightingScene(window));
 	if (ImGui::Button("Instancing"))
 		sceneManager.ChangeScene(new InstancingScene(window));
+	if (ImGui::Button("Post Processing"))
+		sceneManager.ChangeScene(new PostProcessingScene(window));
 
 	ImGui::End();
 }
