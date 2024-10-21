@@ -140,7 +140,7 @@ void LightingScene::Enter()
 
 	// Set up shadowmapping
 	m_SimpleDepthShader = new Shader("./shaders/shadows/simple-depth.vert", "./shaders/shadows/simple-depth.frag");
-	m_DebugQuadShader = new Shader("./shaders/shadows/debug-quad.vert", "./shaders/shadows/debug-quad.frag");
+	m_ShadowedBlinnPhongShader = new Shader("./shaders/shadows/shadowed-blinn-phong.vert", "./shaders/shadows/shadowed-blinn-phong.frag");
 
 	glGenFramebuffers(1, &m_DepthMapFBO);
 	glGenTextures(1, &m_DepthMapTexture);
@@ -148,8 +148,10 @@ void LightingScene::Enter()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 	// attach depth map texture to framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, m_DepthMapFBO);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_DepthMapTexture, 0);
@@ -160,8 +162,9 @@ void LightingScene::Enter()
 	glCheckError();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	m_DebugQuadShader->use();
-	m_DebugQuadShader->setInt("depthMap", 0);
+	m_ShadowedBlinnPhongShader->use();
+	m_ShadowedBlinnPhongShader->setInt("diffuseMap", 0);
+	m_ShadowedBlinnPhongShader->setInt("shadowMap", 1);
 }
 
 void LightingScene::Exit()
@@ -214,7 +217,11 @@ void LightingScene::Render()
 	glCheckError();
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
 	RenderScene(m_SimpleDepthShader);
+	glCullFace(GL_BACK);
+	glDisable(GL_CULL_FACE);
 	glCheckError();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -222,36 +229,80 @@ void LightingScene::Render()
 	glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Shader* shader = (m_CurrentShader == 0) ? m_PhongShader : m_BlinnPhongShader;
-	shader->use();
-	shader->setVec3("viewPos", m_Camera.Position);
-	shader->setFloat("material.shininess", 32.0f);
-	ApplyLighting(shader);
+	Shader* shader;
+	switch (m_CurrentShader)
+	{
+	case 0:
+		shader = m_PhongShader;
+		break;
+	case 1:
+		shader = m_BlinnPhongShader;
+		break;
+	case 2:
+		shader = m_ShadowedBlinnPhongShader;
+		break;
+	default:
+		shader = m_BlinnPhongShader;
+		break;
+	}
 
-	// set up view/projection matrices
-	glm::mat4 view = m_Camera.GetViewMatrix();
-	glm::mat4 proj = glm::perspective(m_Camera.Zoom, (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 100.0f);
+	if (m_CurrentShader < 2)
+	{
+		shader->use();
+		shader->setVec3("viewPos", m_Camera.Position);
+		shader->setFloat("material.shininess", 32.0f);
+		ApplyLighting(shader);
 
-	// set up textures
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_SpecularMap);
+		// set up view/projection matrices
+		glm::mat4 view = m_Camera.GetViewMatrix();
+		glm::mat4 proj = glm::perspective(m_Camera.Zoom, (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 100.0f);
 
-	shader->setMat4("view", view);
-	shader->setMat4("projection", proj);
-	m_LightShader->use();
-	m_LightShader->setMat4("view", view);
-	m_LightShader->setMat4("projection", proj);
-	shader->use();
-	glCheckError();
-	RenderScene(shader);
+		// set up textures
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, m_SpecularMap);
+
+		shader->setMat4("view", view);
+		shader->setMat4("projection", proj);
+		m_LightShader->use();
+		m_LightShader->setMat4("view", view);
+		m_LightShader->setMat4("projection", proj);
+		shader->use();
+		glCheckError();
+		RenderScene(shader);
+	}
+	else
+	{
+
+		// set up view/projection matrices
+		glm::mat4 view = m_Camera.GetViewMatrix();
+		glm::mat4 proj = glm::perspective(m_Camera.Zoom, (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 100.0f);
+		m_LightShader->use();
+		m_LightShader->setMat4("view", view);
+		m_LightShader->setMat4("projection", proj);
+		shader->use();
+		shader->setMat4("view", view);
+		shader->setMat4("projection", proj);
+		shader->setVec3("viewPos", m_Camera.Position);
+		shader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		shader->setVec3("lightPos", m_DirLight.direction);
+		glCheckError();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, m_DepthMapTexture);
+		RenderScene(shader);
+		glCheckError();
+	}
 }
 
 void LightingScene::RenderUI()
 {
 	ImGui::RadioButton("Phong Lighting", &m_CurrentShader, 0);
 	ImGui::RadioButton("Blinn-Phong Lighting", &m_CurrentShader, 1);
+	ImGui::RadioButton("Blinn-Phong Lighting (with shadows)", &m_CurrentShader, 2);
 	ImGui::Checkbox("Draw Lights", &m_DrawLights);
 }
 

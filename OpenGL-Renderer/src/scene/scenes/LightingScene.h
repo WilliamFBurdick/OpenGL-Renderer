@@ -49,6 +49,6 @@ private:
 	unsigned int m_DepthMapTexture;
 	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	Shader* m_SimpleDepthShader;
-	Shader* m_DebugQuadShader;
+	Shader* m_ShadowedBlinnPhongShader;
 };
 
