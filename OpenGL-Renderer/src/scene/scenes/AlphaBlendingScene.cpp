@@ -183,7 +183,7 @@ void AlphaBlendingScene::Render()
     // render floor
     glBindVertexArray(m_PlaneVAO);
     glBindTexture(GL_TEXTURE_2D, m_FloorTexture);
-    m_UnlitShader->setMat4("model", glm::mat4(1.0f));
+    m_UnlitShader->setMat4("model", glm::mat4(1.0f)); 
     glDrawArrays(GL_TRIANGLES, 0, 6);
     // draw windows (optionally sorted from furthest to nearest)
     glBindVertexArray(m_TransparentVAO);
@@ -218,6 +218,6 @@ void AlphaBlendingScene::Render()
 void AlphaBlendingScene::RenderUI()
 {
     ImGui::Text("Sort windows?");
-    ImGui::Checkbox("Sort?: ", &m_Sort);
+    ImGui::Checkbox("Sort? ", &m_Sort);
 }
 

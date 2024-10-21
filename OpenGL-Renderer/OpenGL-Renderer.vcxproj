@@ -80,6 +80,12 @@
     <None Include="shaders\lit\phong.vert" />
     <None Include="shaders\post-processing\post-processing.frag" />
     <None Include="shaders\post-processing\post-processing.vert" />
+    <None Include="shaders\shadows\debug-quad.frag" />
+    <None Include="shaders\shadows\debug-quad.vert" />
+    <None Include="shaders\shadows\shadowed-blinn-phong.frag" />
+    <None Include="shaders\shadows\shadowed-blinn-phong.vert" />
+    <None Include="shaders\shadows\simple-depth.frag" />
+    <None Include="shaders\shadows\simple-depth.vert" />
     <None Include="shaders\unlit\color.frag" />
     <None Include="shaders\unlit\color.vert" />
     <None Include="shaders\unlit\unlit.frag" />

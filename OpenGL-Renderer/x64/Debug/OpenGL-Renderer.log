@@ -1,5 +1,7 @@
 ﻿  main.cpp
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(110,46): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(111,58): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(126,58): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-  OpenGL-Renderer.vcxproj -> C:\Users\Wburdick\source\repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(110,46): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(111,58): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(126,58): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  LightingScene.cpp
+  Generating Code...
+  OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Debug\OpenGL-Renderer.exe

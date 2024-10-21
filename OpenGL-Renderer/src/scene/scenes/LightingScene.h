@@ -19,6 +19,7 @@ private:
 	// Helper methods
 	void SetupLights();
 	void ApplyLighting(Shader*& shader);
+	void RenderScene(Shader*& shader);
 private:
 	Camera m_Camera;
 	Shader* m_PhongShader;
@@ -40,5 +41,14 @@ private:
 	// Textures
 	unsigned int m_DiffuseMap;
 	unsigned int m_SpecularMap;
+
+	// Shadowmapping
+	unsigned int m_QuadVAO;
+	unsigned int m_QuadVBO;
+	unsigned int m_DepthMapFBO;
+	unsigned int m_DepthMapTexture;
+	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+	Shader* m_SimpleDepthShader;
+	Shader* m_DebugQuadShader;
 };
 

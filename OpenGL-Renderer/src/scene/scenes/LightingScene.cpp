@@ -65,6 +65,16 @@ void LightingScene::Enter()
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
 	};
+	float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
+		// positions   // texCoords
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 1.0f
+	};
 
 	m_CubePositions = {
 		glm::vec3(0.0f,  0.0f,  0.0f),
@@ -102,6 +112,17 @@ void LightingScene::Enter()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	// Set up quad
+	glGenVertexArrays(1, &m_QuadVAO);
+	glGenBuffers(1, &m_QuadVBO);
+	glBindVertexArray(m_QuadVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_QuadVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
 	// Set up textures
 	m_DiffuseMap = Utils::LoadTexture("res/textures/container2.png");
 	m_SpecularMap = Utils::LoadTexture("res/textures/container2_specular.png");
@@ -115,6 +136,32 @@ void LightingScene::Enter()
 	m_BlinnPhongShader->setInt("material.specular", 1);
 
 	SetupLights();
+
+
+	// Set up shadowmapping
+	m_SimpleDepthShader = new Shader("./shaders/shadows/simple-depth.vert", "./shaders/shadows/simple-depth.frag");
+	m_DebugQuadShader = new Shader("./shaders/shadows/debug-quad.vert", "./shaders/shadows/debug-quad.frag");
+
+	glGenFramebuffers(1, &m_DepthMapFBO);
+	glGenTextures(1, &m_DepthMapTexture);
+	glBindTexture(GL_TEXTURE_2D, m_DepthMapTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// attach depth map texture to framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, m_DepthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_DepthMapTexture, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		printf("ERROR: Framebuffer is not complete!");
+	glCheckError();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	m_DebugQuadShader->use();
+	m_DebugQuadShader->setInt("depthMap", 0);
 }
 
 void LightingScene::Exit()
@@ -150,6 +197,31 @@ void LightingScene::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	SetupLights();
+
+	// FIRST PASS - Render depth of scene (from light's perspective) to a texture
+	glm::mat4 lightProjection, lightView;
+	glm::mat4 lightSpaceMatrix;
+	float near_plane = 1.0f, far_plane = 7.5f;
+	lightProjection = glm::ortho(-10.0f, 10.0f, -1.0f, 10.0f, near_plane, far_plane);
+	lightView = glm::lookAt(m_DirLight.direction, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	lightSpaceMatrix = lightProjection * lightView;
+	// render scene from light's point of view
+	m_SimpleDepthShader->use();
+	m_SimpleDepthShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_DepthMapFBO);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glCheckError();
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+	RenderScene(m_SimpleDepthShader);
+	glCheckError();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	// reset viewport
+	glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	Shader* shader = (m_CurrentShader == 0) ? m_PhongShader : m_BlinnPhongShader;
 	shader->use();
 	shader->setVec3("viewPos", m_Camera.Position);
@@ -168,37 +240,12 @@ void LightingScene::Render()
 
 	shader->setMat4("view", view);
 	shader->setMat4("projection", proj);
-
-	// draw scene objects
-	glBindVertexArray(m_CubeVAO);
+	m_LightShader->use();
+	m_LightShader->setMat4("view", view);
+	m_LightShader->setMat4("projection", proj);
+	shader->use();
 	glCheckError();
-	glm::mat4 model = glm::mat4(1.0f);
-	unsigned int i = 0;
-	for (glm::vec3 position : m_CubePositions)
-	{
-		model = glm::translate(glm::mat4(1.0f), position);
-		float angle = 20.0f * i++;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-		shader->setMat4("model", model);
-
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
-
-	if (m_DrawLights)
-	{
-		// Bind shader
-		m_LightShader->use();
-		m_LightShader->setVec4("color", glm::vec4(1.0f));
-		m_LightShader->setMat4("view", view);
-		m_LightShader->setMat4("projection", proj);
-		// Bind light VAO
-		glBindVertexArray(m_LightVAO);
-		// Draw point light
-		model = glm::translate(glm::mat4(1.0f), m_PointLight.position);
-		model = glm::scale(model, glm::vec3(0.2f));
-		m_LightShader->setMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
+	RenderScene(shader);
 }
 
 void LightingScene::RenderUI()
@@ -248,4 +295,35 @@ void LightingScene::ApplyLighting(Shader*& shader)
 	Light::ApplyDirectionalLight(shader, m_DirLight);
 	Light::ApplyPointLight(shader, m_PointLight);
 	Light::ApplySpotLight(shader, m_SpotLight);
+}
+
+void LightingScene::RenderScene(Shader*& shader)
+{
+	// draw scene objects
+	glBindVertexArray(m_CubeVAO);
+	glm::mat4 model = glm::mat4(1.0f);
+	unsigned int i = 0;
+	for (glm::vec3 position : m_CubePositions)
+	{
+		model = glm::translate(glm::mat4(1.0f), position);
+		float angle = 20.0f * i++;
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+		shader->setMat4("model", model);
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
+
+	if (m_DrawLights)
+	{
+		// Bind shader
+		m_LightShader->use();
+		m_LightShader->setVec4("color", glm::vec4(1.0f));
+		// Bind light VAO
+		glBindVertexArray(m_LightVAO);
+		// Draw point light
+		model = glm::translate(glm::mat4(1.0f), m_PointLight.position);
+		model = glm::scale(model, glm::vec3(0.2f));
+		m_LightShader->setMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
 }

@@ -173,9 +173,9 @@ void InstancingScene::Render()
 
 void InstancingScene::RenderUI()
 {
-	ImGui::Checkbox("Use instanced rendering?: ", &m_InstancedRender);
+	ImGui::Checkbox("Use instanced rendering? ", &m_InstancedRender);
 	unsigned int newCount = m_ModelMatrices.size();
-	ImGui::InputInt("Asteroid Count: ", (int*)&newCount);
+	ImGui::InputInt("Asteroid Count ", (int*)&newCount);
 	if (newCount != m_ModelMatrices.size())
 	{
 		GenerateModelMatrices(newCount);
