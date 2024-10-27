@@ -141,6 +141,8 @@ void LightingScene::Enter()
 	// Set up shadowmapping
 	m_SimpleDepthShader = new Shader("./shaders/shadows/simple-depth.vert", "./shaders/shadows/simple-depth.frag");
 	m_ShadowedBlinnPhongShader = new Shader("./shaders/shadows/shadowed-blinn-phong.vert", "./shaders/shadows/shadowed-blinn-phong.frag");
+	m_PointDepthShader = new Shader("./shaders/shadows/point-depth.vert", "./shaders/shadows/point-depth.frag", "./shaders/shadows/point-depth.geo");
+	m_PointShadowBlinnPhongShader = new Shader("./shaders/shadows/point-shadow-blinn-phong.vert", "./shaders/shadows/point-shadow-blinn-phong.frag");
 
 	glGenFramebuffers(1, &m_DepthMapFBO);
 	glGenTextures(1, &m_DepthMapTexture);
@@ -162,9 +164,29 @@ void LightingScene::Enter()
 	glCheckError();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	// create depth cubemap
+	glGenFramebuffers(1, &m_PointDepthMapFBO);
+	glGenTextures(1, &m_PointDepthCubemap);
+	for (unsigned int i = 0; i < 6; ++i)
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	// set up cubemap framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, m_PointDepthMapFBO);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_PointDepthMapFBO, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	m_ShadowedBlinnPhongShader->use();
 	m_ShadowedBlinnPhongShader->setInt("diffuseMap", 0);
 	m_ShadowedBlinnPhongShader->setInt("shadowMap", 1);
+
+	m_PointShadowBlinnPhongShader->use();
+	m_PointShadowBlinnPhongShader->setInt("diffuseTexture", 0);
+	m_PointShadowBlinnPhongShader->setInt("depthMap", 1);
 }
 
 void LightingScene::Exit()
@@ -225,6 +247,26 @@ void LightingScene::Render()
 	glCheckError();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	// Render to Depth Cubemap (for point lights)
+	lightProjection = glm::perspective(glm::radians(90.0f), (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT, near_plane, far_plane);
+	std::vector<glm::mat4> shadowTransforms;
+	shadowTransforms.push_back(lightProjection * glm::lookAt(m_PointLight.position, m_PointLight.position + glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+	shadowTransforms.push_back(lightProjection * glm::lookAt(m_PointLight.position, m_PointLight.position + glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+	shadowTransforms.push_back(lightProjection * glm::lookAt(m_PointLight.position, m_PointLight.position + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+	shadowTransforms.push_back(lightProjection * glm::lookAt(m_PointLight.position, m_PointLight.position + glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+	shadowTransforms.push_back(lightProjection * glm::lookAt(m_PointLight.position, m_PointLight.position + glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+	shadowTransforms.push_back(lightProjection * glm::lookAt(m_PointLight.position, m_PointLight.position + glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+
+	glBindFramebuffer(GL_FRAMEBUFFER, m_PointDepthMapFBO);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	m_PointDepthShader->use();
+	for (unsigned int i = 0; i < 6; ++i)
+		m_PointDepthShader->setMat4("shadowMatrices[" + std::to_string(i) + "]", shadowTransforms[i]);
+	m_PointDepthShader->setFloat("far_plane", far_plane);
+	m_PointDepthShader->setVec3("lightPos", m_PointLight.position);
+	RenderScene(m_PointDepthShader);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	// reset viewport
 	glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -240,6 +282,9 @@ void LightingScene::Render()
 		break;
 	case 2:
 		shader = m_ShadowedBlinnPhongShader;
+		break;
+	case 3:
+		shader = m_PointShadowBlinnPhongShader;
 		break;
 	default:
 		shader = m_BlinnPhongShader;
@@ -272,7 +317,7 @@ void LightingScene::Render()
 		glCheckError();
 		RenderScene(shader);
 	}
-	else
+	else if (m_CurrentShader == 2)
 	{
 
 		// set up view/projection matrices
@@ -296,6 +341,27 @@ void LightingScene::Render()
 		RenderScene(shader);
 		glCheckError();
 	}
+	else if (m_CurrentShader == 3)
+	{
+		// set up view/projection matrices
+		glm::mat4 view = m_Camera.GetViewMatrix();
+		glm::mat4 proj = glm::perspective(m_Camera.Zoom, (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 100.0f);
+		m_LightShader->use();
+		m_LightShader->setMat4("view", view);
+		m_LightShader->setMat4("projection", proj);
+		shader->use();
+		shader->setMat4("view", view);
+		shader->setMat4("projection", proj);
+		shader->setVec3("viewPos", m_Camera.Position);
+		shader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		shader->setVec3("lightPos", m_PointLight.position);
+		shader->setFloat("far_plane", far_plane);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_PointDepthCubemap);
+		RenderScene(shader);
+	}
 }
 
 void LightingScene::RenderUI()
@@ -303,6 +369,7 @@ void LightingScene::RenderUI()
 	ImGui::RadioButton("Phong Lighting", &m_CurrentShader, 0);
 	ImGui::RadioButton("Blinn-Phong Lighting", &m_CurrentShader, 1);
 	ImGui::RadioButton("Blinn-Phong Lighting (with shadows)", &m_CurrentShader, 2);
+	ImGui::RadioButton("Blinn-Phong Lighting (with point shadows)", &m_CurrentShader, 3);
 	ImGui::Checkbox("Draw Lights", &m_DrawLights);
 }
 

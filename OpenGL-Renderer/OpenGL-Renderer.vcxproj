@@ -82,6 +82,11 @@
     <None Include="shaders\post-processing\post-processing.vert" />
     <None Include="shaders\shadows\debug-quad.frag" />
     <None Include="shaders\shadows\debug-quad.vert" />
+    <None Include="shaders\shadows\point-depth.frag" />
+    <None Include="shaders\shadows\point-depth.geo" />
+    <None Include="shaders\shadows\point-depth.vert" />
+    <None Include="shaders\shadows\point-shadow-blinn-phong.frag" />
+    <None Include="shaders\shadows\point-shadow-blinn-phong.vert" />
     <None Include="shaders\shadows\shadowed-blinn-phong.frag" />
     <None Include="shaders\shadows\shadowed-blinn-phong.vert" />
     <None Include="shaders\shadows\simple-depth.frag" />

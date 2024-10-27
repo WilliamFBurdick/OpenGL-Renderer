@@ -47,8 +47,12 @@ private:
 	unsigned int m_QuadVBO;
 	unsigned int m_DepthMapFBO;
 	unsigned int m_DepthMapTexture;
+	unsigned int m_PointDepthMapFBO;
+	unsigned int m_PointDepthCubemap;
 	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	Shader* m_SimpleDepthShader;
+	Shader* m_PointDepthShader;
 	Shader* m_ShadowedBlinnPhongShader;
+	Shader* m_PointShadowBlinnPhongShader;
 };
 

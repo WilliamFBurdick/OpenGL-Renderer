@@ -10,6 +10,8 @@ struct DirectionalLight
 {
 	glm::vec3 direction;
 	glm::vec3 ambient, diffuse, specular;
+	unsigned int depthMapFBO;
+	unsigned int depthMapTexture;
 };
 
 struct PointLight
@@ -17,6 +19,8 @@ struct PointLight
 	glm::vec3 position;
 	glm::vec3 ambient, diffuse, specular;
 	Attenuation attenuation;
+	unsigned int depthMapFBO;
+	unsigned int depthCubemap;
 };
 
 struct SpotLight
@@ -26,6 +30,8 @@ struct SpotLight
 	glm::vec3 ambient, diffuse, specular;
 	float cutOff, outerCutOff;
 	Attenuation attenuation;
+	unsigned int depthMapFBO;
+	unsigned int depthCubemap;
 };
 
 class Light
