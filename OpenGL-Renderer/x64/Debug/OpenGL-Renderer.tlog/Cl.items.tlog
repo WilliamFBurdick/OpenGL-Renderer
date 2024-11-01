@@ -1,4 +1,5 @@
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\libs\glad.c;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\glad.obj
+C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\NormalMappingScene.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\NormalMappingScene.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AlphaBlendingScene.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\AlphaBlendingScene.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\PostProcessingScene.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\PostProcessingScene.obj
 C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\InstancingScene.cpp;C:\Users\Wburdick\source\repos\OpenGL-Renderer\OpenGL-Renderer\x64\Debug\InstancingScene.obj

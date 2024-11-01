@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\scene\scenes\NormalMappingScene.cpp" />
     <ClCompile Include="src\scene\scenes\AlphaBlendingScene.cpp" />
     <ClCompile Include="src\scene\scenes\PostProcessingScene.cpp" />
     <ClCompile Include="src\scene\scenes\InstancingScene.cpp" />
@@ -43,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\scene\scenes\NormalMappingScene.h" />
     <ClInclude Include="src\scene\scenes\AlphaBlendingScene.h" />
     <ClInclude Include="src\scene\scenes\PostProcessingScene.h" />
     <ClInclude Include="src\scene\scenes\InstancingScene.h" />
@@ -70,6 +72,8 @@
     <None Include="assimp-vc143-mt.dll" />
     <None Include="Draco.dll" />
     <None Include="glfw3.dll" />
+    <None Include="shaders\detail-maps\normal-mapping.fs" />
+    <None Include="shaders\detail-maps\normal-mapping.vs" />
     <None Include="shaders\instancing\instanced.frag" />
     <None Include="shaders\instancing\instanced.vert" />
     <None Include="shaders\instancing\not-instanced.frag" />

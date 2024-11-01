@@ -191,6 +191,9 @@ void LightingScene::Enter()
 
 void LightingScene::Exit()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDeleteFramebuffers(1, &m_PointDepthMapFBO);
+	glDeleteFramebuffers(1, &m_DepthMapFBO);
 	glDeleteBuffers(1, &m_CubeVBO);
 	glDeleteVertexArrays(1, &m_CubeVAO);
 	glDeleteVertexArrays(1, &m_LightVAO);
@@ -265,11 +268,13 @@ void LightingScene::Render()
 	m_PointDepthShader->setFloat("far_plane", far_plane);
 	m_PointDepthShader->setVec3("lightPos", m_PointLight.position);
 	RenderScene(m_PointDepthShader);
+	glCheckError();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// reset viewport
 	glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glCheckError();
 
 	Shader* shader;
 	switch (m_CurrentShader)
@@ -429,6 +434,7 @@ void LightingScene::RenderScene(Shader*& shader)
 		shader->setMat4("model", model);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glCheckError();
 	}
 
 	if (m_DrawLights)
@@ -443,5 +449,6 @@ void LightingScene::RenderScene(Shader*& shader)
 		model = glm::scale(model, glm::vec3(0.2f));
 		m_LightShader->setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glCheckError();
 	}
 }

@@ -18,6 +18,7 @@
 #include "scene/scenes/InstancingScene.h"
 #include "scene/scenes/PostProcessingScene.h"
 #include "scene/scenes/AlphaBlendingScene.h"
+#include "scene/scenes/NormalMappingScene.h"
 
 void renderProperties(Window* window, Scene* scene);
 void renderSceneSelection(Window* window, SceneManager& sceneManager);
@@ -138,6 +139,8 @@ void renderSceneSelection(Window* window, SceneManager& sceneManager)
 		sceneManager.ChangeScene(new PostProcessingScene(window));
 	if (ImGui::Button("Alpha Blending"))
 		sceneManager.ChangeScene(new AlphaBlendingScene(window));
+	if (ImGui::Button("Normal Maps"))
+		sceneManager.ChangeScene(new NormalMappingScene(window));
 
 	ImGui::End();
 }
