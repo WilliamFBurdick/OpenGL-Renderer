@@ -1,8 +1,11 @@
 #include "NormalMappingScene.h"
+#include "input/Input.h"
 
 NormalMappingScene::NormalMappingScene(Window* window):
 	Scene(window)
 {
+    m_Camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
     // positions
     glm::vec3 pos1(-1.0f, 1.0f, 0.0f);
     glm::vec3 pos2(-1.0f, -1.0f, 0.0f);
@@ -101,7 +104,23 @@ NormalMappingScene::NormalMappingScene(Window* window):
 
 void NormalMappingScene::Update(float dt)
 {
-
+    if (Input::GetMouseButton(m_Window->GetWindow(), GLFW_MOUSE_BUTTON_RIGHT))
+    {
+        Input::SetCursorVisible(m_Window->GetWindow(), false);
+        m_Camera.ProcessMouseMovement(Input::GetMouse().xDelta, Input::GetMouse().yDelta);
+        if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_W) == GLFW_PRESS)
+            m_Camera.ProcessKeyboard(EForward, dt);
+        if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_S) == GLFW_PRESS)
+            m_Camera.ProcessKeyboard(EBackward, dt);
+        if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_A) == GLFW_PRESS)
+            m_Camera.ProcessKeyboard(ELeft, dt);
+        if (Input::GetKey(m_Window->GetWindow(), GLFW_KEY_D) == GLFW_PRESS)
+            m_Camera.ProcessKeyboard(ERight, dt);
+    }
+    else
+    {
+        Input::SetCursorVisible(m_Window->GetWindow(), true);
+    }
 }
 
 void NormalMappingScene::Render()

@@ -74,6 +74,8 @@
     <None Include="glfw3.dll" />
     <None Include="shaders\detail-maps\normal-mapping.fs" />
     <None Include="shaders\detail-maps\normal-mapping.vs" />
+    <None Include="shaders\detail-maps\parallax-mapping.fs" />
+    <None Include="shaders\detail-maps\parallax-mapping.vs" />
     <None Include="shaders\instancing\instanced.frag" />
     <None Include="shaders\instancing\instanced.vert" />
     <None Include="shaders\instancing\not-instanced.frag" />
