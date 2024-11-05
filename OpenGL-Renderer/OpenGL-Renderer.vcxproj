@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\scene\scenes\DynamicRangeScene.cpp" />
     <ClCompile Include="src\scene\scenes\NormalMappingScene.cpp" />
     <ClCompile Include="src\scene\scenes\AlphaBlendingScene.cpp" />
     <ClCompile Include="src\scene\scenes\PostProcessingScene.cpp" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\scene\scenes\DynamicRangeScene.h" />
     <ClInclude Include="src\scene\scenes\NormalMappingScene.h" />
     <ClInclude Include="src\scene\scenes\AlphaBlendingScene.h" />
     <ClInclude Include="src\scene\scenes\PostProcessingScene.h" />
@@ -76,6 +78,10 @@
     <None Include="shaders\detail-maps\normal-mapping.vs" />
     <None Include="shaders\detail-maps\parallax-mapping.fs" />
     <None Include="shaders\detail-maps\parallax-mapping.vs" />
+    <None Include="shaders\hdr\hdr.fs" />
+    <None Include="shaders\hdr\hdr.vs" />
+    <None Include="shaders\hdr\lit.fs" />
+    <None Include="shaders\hdr\lit.vs" />
     <None Include="shaders\instancing\instanced.frag" />
     <None Include="shaders\instancing\instanced.vert" />
     <None Include="shaders\instancing\not-instanced.frag" />

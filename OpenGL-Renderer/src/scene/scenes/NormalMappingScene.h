@@ -27,11 +27,17 @@ private:
 	unsigned int m_QuadVBO;
 	// Textures
 	unsigned int m_QuadDiffuseMap, m_QuadNormalMap;
+	unsigned int m_BricksDiffuse, m_BricksNormal, m_BricksHeight;
 
 	// Shaders
 	Shader* m_NormalMapShader;
+	Shader* m_ParallaxMapShader;
+	int m_ActiveShader;
 
 	// Lights
 	glm::vec3 m_LightPos;
+
+	// Height scaling
+	float m_HeightScale;
 };
 

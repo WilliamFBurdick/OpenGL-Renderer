@@ -26,7 +26,7 @@ void main(void)
 		discard;
 
 	// sample the textures with new texture coords
-	vec3 normal = texture(normalMap, texCoords);
+	vec3 normal = texture(normalMap, texCoords).rgb;
 	normal = normalize(normal * 2.0 - 1.0);
 
 	// get diffuse color

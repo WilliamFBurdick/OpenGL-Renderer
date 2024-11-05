@@ -1,5 +1,6 @@
 #include "NormalMappingScene.h"
 #include "input/Input.h"
+#include <imgui/imgui.h>
 
 NormalMappingScene::NormalMappingScene(Window* window):
 	Scene(window)
@@ -91,15 +92,28 @@ NormalMappingScene::NormalMappingScene(Window* window):
 
     // Load shaders
     m_NormalMapShader = new Shader("./shaders/detail-maps/normal-mapping.vs", "./shaders/detail-maps/normal-mapping.fs");
+    m_ParallaxMapShader = new Shader("./shaders/detail-maps/parallax-mapping.vs", "./shaders/detail-maps/parallax-mapping.fs");
+    m_ActiveShader = 0;
 
     // Load textures
     m_QuadDiffuseMap = Utils::LoadTexture("./res/textures/brickwall.jpg");
     m_QuadNormalMap = Utils::LoadTexture("./res/textures/brickwall_normal.jpg");
+    m_BricksDiffuse = Utils::LoadTexture("./res/textures/bricks2.jpg");
+    m_BricksNormal = Utils::LoadTexture("./res/textures/bricks2_normal.jpg");
+    m_BricksHeight = Utils::LoadTexture("./res/textures/bricks2_disp.jpg");
 
+    m_NormalMapShader->use();
     m_NormalMapShader->setInt("diffuseMap", 0);
     m_NormalMapShader->setInt("normalMap", 1);
 
+    m_ParallaxMapShader->use();
+    m_ParallaxMapShader->setInt("diffuseMap", 0);
+    m_ParallaxMapShader->setInt("normalMap", 1);
+    m_ParallaxMapShader->setInt("depthMap", 2);
+
     m_LightPos = glm::vec3(0.5f, 1.0f, 0.3f);
+
+    m_HeightScale = 0.5f;
 }
 
 void NormalMappingScene::Update(float dt)
@@ -125,22 +139,41 @@ void NormalMappingScene::Update(float dt)
 
 void NormalMappingScene::Render()
 {
+    Shader* shader = m_ActiveShader == 0 ? m_NormalMapShader : m_ParallaxMapShader;
+
     // configure matrices
     glm::mat4 projection = glm::perspective(glm::radians(m_Camera.Zoom), (float)m_Window->GetWidth() / (float)m_Window->GetHeight(), 0.1f, 100.0f);
     glm::mat4 view = m_Camera.GetViewMatrix();
-    m_NormalMapShader->use();
-    m_NormalMapShader->setMat4("projection", projection);
-    m_NormalMapShader->setMat4("view", view);
+    shader->use();
+    shader->setMat4("projection", projection);
+    shader->setMat4("view", view);
     // render the quad
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians((float)glfwGetTime() * -10.0f), glm::normalize(glm::vec3(1.0, 0.0, 1.0)));
-    m_NormalMapShader->setMat4("model", model);
-    m_NormalMapShader->setVec3("viewPos", m_Camera.Position);
-    m_NormalMapShader->setVec3("lightPos", m_LightPos);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_QuadDiffuseMap);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, m_QuadNormalMap);
+    shader->setMat4("model", model);
+    shader->setVec3("viewPos", m_Camera.Position);
+    shader->setVec3("lightPos", m_LightPos);
+    glCheckError();
+
+    if (m_ActiveShader == 0)
+    {
+        // Normal mapping demo
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m_QuadDiffuseMap);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, m_QuadNormalMap);
+    }
+    else if (m_ActiveShader == 1)
+    {
+        // Parallax mapping demo
+        m_ParallaxMapShader->setFloat("height_scale", m_HeightScale);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m_BricksDiffuse);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, m_BricksNormal);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, m_BricksHeight);
+    }
 
     glBindVertexArray(m_QuadVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -150,6 +183,9 @@ void NormalMappingScene::Render()
 
 void NormalMappingScene::RenderUI()
 {
+    ImGui::RadioButton("Normal mapping", &m_ActiveShader, 0);
+    ImGui::RadioButton("Parallax mapping", &m_ActiveShader, 1);
+    ImGui::DragFloat("Parallax Height Scale: ", &m_HeightScale, 0.01f, 0.0f, 1.0f);
 }
 
 void NormalMappingScene::Enter()
