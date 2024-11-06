@@ -5,7 +5,7 @@
 DynamicRangeScene::DynamicRangeScene(Window* window):
 	Scene(window)
 {
-	m_Camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f));
+	m_Camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, 0.0f);
 
 	m_LightingShader = new Shader("./shaders/hdr/lit.vs", "./shaders/hdr/lit.fs");
 	m_HDRShader = new Shader("./shaders/hdr/hdr.vs", "./shaders/hdr/hdr.fs");
@@ -67,8 +67,6 @@ DynamicRangeScene::DynamicRangeScene(Window* window):
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 
 	// Create quad
 	float quadVertices[] = {
@@ -81,13 +79,14 @@ DynamicRangeScene::DynamicRangeScene(Window* window):
 	glGenVertexArrays(1, &m_QuadVAO);
 	glGenBuffers(1, &m_QuadVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_QuadVBO);
+	glBindVertexArray(m_QuadVAO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+
+	glCheckError();
 
 	m_WoodTexture = Utils::LoadTexture("./res/textures/wood.png", true);
 	glGenFramebuffers(1, &m_hdrFBO);
@@ -108,6 +107,8 @@ DynamicRangeScene::DynamicRangeScene(Window* window):
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		printf("Framebuffer not complete!");
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glCheckError();
 
 	m_LightPositions.push_back(glm::vec3(0.0f, 0.0f, 49.5f)); // back light
 	m_LightPositions.push_back(glm::vec3(-1.4f, -1.9f, 9.0f));
@@ -177,8 +178,8 @@ void DynamicRangeScene::Render()
 	// render cube
 	glBindVertexArray(m_CubeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glCheckError();
 
 	// Now render floating point color buffer to 2D quad and tonemap HDR colors
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -190,6 +191,7 @@ void DynamicRangeScene::Render()
 	glBindVertexArray(m_QuadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+	glCheckError();
 }
 
 void DynamicRangeScene::RenderUI()
@@ -200,7 +202,7 @@ void DynamicRangeScene::RenderUI()
 
 void DynamicRangeScene::Enter()
 {
-
+	glDisable(GL_CULL_FACE);
 }
 
 void DynamicRangeScene::Exit()
