@@ -171,11 +171,12 @@ void LightingScene::Enter()
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	// set up cubemap framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, m_PointDepthMapFBO);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_PointDepthMapFBO, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_PointDepthCubemap, 0);
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -366,6 +367,7 @@ void LightingScene::Render()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_PointDepthCubemap);
 		RenderScene(shader);
+		glCheckError();
 	}
 }
 
@@ -434,7 +436,6 @@ void LightingScene::RenderScene(Shader*& shader)
 		shader->setMat4("model", model);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glCheckError();
 	}
 
 	if (m_DrawLights)
@@ -449,6 +450,5 @@ void LightingScene::RenderScene(Shader*& shader)
 		model = glm::scale(model, glm::vec3(0.2f));
 		m_LightShader->setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glCheckError();
 	}
 }

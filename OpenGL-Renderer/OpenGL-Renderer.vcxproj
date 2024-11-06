@@ -74,8 +74,6 @@
     <None Include="assimp-vc143-mt.dll" />
     <None Include="Draco.dll" />
     <None Include="glfw3.dll" />
-    <None Include="res\models\planet\planet.mtl" />
-    <None Include="res\models\rock\rock.mtl" />
     <None Include="shaders\detail-maps\normal-mapping.fs" />
     <None Include="shaders\detail-maps\normal-mapping.vs" />
     <None Include="shaders\detail-maps\parallax-mapping.fs" />
@@ -111,17 +109,8 @@
     <None Include="shaders\unlit\unlit.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\models\planet\mars.png" />
-    <Image Include="res\models\rock\rock.png" />
     <Image Include="res\textures\container2.png" />
     <Image Include="res\textures\container2_specular.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="res\models\planet\planet.obj" />
-    <Object Include="res\models\rock\rock.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="res\models\planet\source.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
