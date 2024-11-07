@@ -113,7 +113,7 @@ NormalMappingScene::NormalMappingScene(Window* window):
 
     m_LightPos = glm::vec3(0.5f, 1.0f, 0.3f);
 
-    m_HeightScale = 0.5f;
+    m_HeightScale = 0.2f;
 }
 
 void NormalMappingScene::Update(float dt)
