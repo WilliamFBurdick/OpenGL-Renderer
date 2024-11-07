@@ -5,7 +5,7 @@
 DynamicRangeScene::DynamicRangeScene(Window* window):
 	Scene(window)
 {
-	m_Camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, 0.0f);
+	m_Camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, 0.0f);
 
 	m_LightingShader = new Shader("./shaders/hdr/lit.vs", "./shaders/hdr/lit.fs");
 	m_HDRShader = new Shader("./shaders/hdr/hdr.vs", "./shaders/hdr/hdr.fs");
@@ -125,8 +125,8 @@ DynamicRangeScene::DynamicRangeScene(Window* window):
 	m_HDRShader->use();
 	m_HDRShader->setInt("hdrBuffer", 0);
 
-	m_HDR = false;
-	m_Exposure = 0.5f;
+	m_HDR = true;
+	m_Exposure = 0.2f;
 }
 
 void DynamicRangeScene::Update(float dt)
@@ -197,7 +197,7 @@ void DynamicRangeScene::Render()
 void DynamicRangeScene::RenderUI()
 {
 	ImGui::Checkbox("HDR enabled?", &m_HDR);
-	ImGui::DragFloat("Exposure", &m_Exposure, 0.1f, 0.0f, 100.0f);
+	ImGui::DragFloat("Exposure", &m_Exposure, 0.01f, 0.0f, 5.0f);
 }
 
 void DynamicRangeScene::Enter()
