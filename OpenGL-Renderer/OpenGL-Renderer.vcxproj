@@ -74,14 +74,6 @@
     <None Include="assimp-vc143-mt.dll" />
     <None Include="Draco.dll" />
     <None Include="glfw3.dll" />
-    <None Include="shaders\detail-maps\normal-mapping.fs" />
-    <None Include="shaders\detail-maps\normal-mapping.vs" />
-    <None Include="shaders\detail-maps\parallax-mapping.fs" />
-    <None Include="shaders\detail-maps\parallax-mapping.vs" />
-    <None Include="shaders\hdr\hdr.fs" />
-    <None Include="shaders\hdr\hdr.vs" />
-    <None Include="shaders\hdr\lit.fs" />
-    <None Include="shaders\hdr\lit.vs" />
     <None Include="shaders\instancing\instanced.frag" />
     <None Include="shaders\instancing\instanced.vert" />
     <None Include="shaders\instancing\not-instanced.frag" />
