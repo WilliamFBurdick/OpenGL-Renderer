@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad.c" />
+    <ClCompile Include="src\scene\scenes\BloomScene.cpp" />
     <ClCompile Include="src\scene\scenes\DynamicRangeScene.cpp" />
     <ClCompile Include="src\scene\scenes\NormalMappingScene.cpp" />
     <ClCompile Include="src\scene\scenes\AlphaBlendingScene.cpp" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\includes\stb_image.h" />
+    <ClInclude Include="src\scene\scenes\BloomScene.h" />
     <ClInclude Include="src\scene\scenes\DynamicRangeScene.h" />
     <ClInclude Include="src\scene\scenes\NormalMappingScene.h" />
     <ClInclude Include="src\scene\scenes\AlphaBlendingScene.h" />
@@ -74,6 +76,18 @@
     <None Include="assimp-vc143-mt.dll" />
     <None Include="Draco.dll" />
     <None Include="glfw3.dll" />
+    <None Include="shaders\bloom\lit.fs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\bloom\lit.vs">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="shaders\instancing\instanced.frag" />
     <None Include="shaders\instancing\instanced.vert" />
     <None Include="shaders\instancing\not-instanced.frag" />
