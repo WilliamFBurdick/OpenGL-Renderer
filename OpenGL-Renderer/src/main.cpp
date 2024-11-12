@@ -20,6 +20,9 @@
 #include "scene/scenes/AlphaBlendingScene.h"
 #include "scene/scenes/NormalMappingScene.h"
 #include "scene/scenes/DynamicRangeScene.h"
+#include "scene/scenes/BloomScene.h"
+#include "scene/scenes/DeferredShadingScene.h"
+#include "scene/scenes/AmbientOcculusionScene.h"
 
 void renderProperties(Window* window, Scene* scene);
 void renderSceneSelection(Window* window, SceneManager& sceneManager);
@@ -144,6 +147,12 @@ void renderSceneSelection(Window* window, SceneManager& sceneManager)
 		sceneManager.ChangeScene(new NormalMappingScene(window));
 	if (ImGui::Button("High Dynamic Range"))
 		sceneManager.ChangeScene(new DynamicRangeScene(window));
+	if (ImGui::Button("Bloom"))
+		sceneManager.ChangeScene(new BloomScene(window));
+	if (ImGui::Button("Deferred Shading"))
+		sceneManager.ChangeScene(new DeferredShadingScene(window));
+	if (ImGui::Button("Ambient Occlusion"))
+		sceneManager.ChangeScene(new AmbientOcculusionScene(window));
 
 	ImGui::End();
 }

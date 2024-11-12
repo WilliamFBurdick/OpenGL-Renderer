@@ -16,7 +16,8 @@ public:
 	void Enter() override;
 	void Exit() override;
 private:
-	// Helper methods
+	void RenderCube();
+	void RenderQuad();
 private:
 	Camera m_Camera;
 
@@ -29,11 +30,19 @@ private:
 	unsigned int m_FBOAttachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	unsigned int m_DepthRBO;
 
-	Shader* m_LightingShader;
-	Shader* m_HDRShader;
+	unsigned int m_PingPongFBO[2];
+	unsigned int m_PingPongColorBuffers[2];
+
+	Shader* m_StandardShader;
+	Shader* m_BlurShader;
+	Shader* m_FinalShader;
+	Shader* m_LightShader;
 
 	unsigned int m_WoodTexture, m_ContainerTexture;
 	std::vector<glm::vec3> m_LightPositions;
 	std::vector<glm::vec3> m_LightColors;
+
+	bool m_Bloom;
+	float m_Exposure;
 };
 

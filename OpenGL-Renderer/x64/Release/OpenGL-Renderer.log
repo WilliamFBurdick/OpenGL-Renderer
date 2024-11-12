@@ -1,12 +1,74 @@
-﻿  main.cpp
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(138,29): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(139,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(157,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Scene.cpp
+﻿  AmbientOcculusionScene.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.h(54,17): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'src/scene/scenes/AmbientOcculusionScene.cpp')
+  
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(23,100): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(23,70): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(32,100): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(32,70): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(39,97): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(39,67): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(49,116): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(49,86): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(64,96): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(64,66): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(76,96): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp(76,66): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  DeferredShadingScene.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(30,103): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(30,73): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(37,100): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(37,70): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(44,100): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(44,70): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(53,119): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(53,89): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(154,149): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(154,119): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(154,84): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp(154,54): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+  BloomScene.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\BloomScene.cpp(28,101): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\BloomScene.cpp(28,71): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
+  DynamicRangeScene.cpp
+  NormalMappingScene.cpp
+  AlphaBlendingScene.cpp
+  PostProcessingScene.cpp
+  InstancingScene.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\InstancingScene.cpp(177,24): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
   LightingScene.cpp
+  Input.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\input\Input.cpp(12,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\input\Input.cpp(13,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\input\Input.cpp(20,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\input\Input.cpp(21,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  Scene.cpp
+  Mesh.cpp
+  Model.cpp
+  Compiling...
+  Camera.cpp
+  Shader.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\shader\Shader.cpp(49,10): warning C4129: 'C': unrecognized character escape sequence
+  main.cpp
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.h(54,17): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'src/main.cpp')
+  
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(115,46): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(116,58): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp(131,58): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  stb_image.cpp
+  Window.cpp
   Generating code
-  3 of 1822 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    22 functions had inline decision re-evaluated but remain unchanged
+  1428 of 2802 functions (51.0%) were compiled, the rest were copied from previous compilation.
+    664 functions were new in current compilation
+    124 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
+glad.obj : warning LNK4099: PDB '' was not found with 'glad.obj' or at ''; linking object as if no debug info
   OpenGL-Renderer.vcxproj -> D:\Repos\OpenGL-Renderer\x64\Release\OpenGL-Renderer.exe

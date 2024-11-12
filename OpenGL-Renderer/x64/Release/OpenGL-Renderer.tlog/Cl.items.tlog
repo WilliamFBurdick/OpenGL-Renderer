@@ -1,4 +1,12 @@
 D:\Repos\OpenGL-Renderer\libs\glad.c;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\glad.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AmbientOcculusionScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\AmbientOcculusionScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DeferredShadingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\DeferredShadingScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\BloomScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\BloomScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\DynamicRangeScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\DynamicRangeScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\NormalMappingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\NormalMappingScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\AlphaBlendingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\AlphaBlendingScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\PostProcessingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\PostProcessingScene.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\InstancingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\InstancingScene.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\scene\scenes\LightingScene.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\LightingScene.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\input\Input.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Input.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\imgui\imgui.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\imgui.obj
@@ -15,3 +23,4 @@ D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\camera\Camera.cpp;D:\Repos\OpenGL-R
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\shader\Shader.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Shader.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\main.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\main.obj
 D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\stb_image.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\stb_image.obj
+D:\Repos\OpenGL-Renderer\OpenGL-Renderer\src\window\Window.cpp;D:\Repos\OpenGL-Renderer\OpenGL-Renderer\x64\Release\Window.obj
